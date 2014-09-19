@@ -65,6 +65,6 @@ window.admob.refreshFullScreenAd();
 
 Example:
 
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob.overlay/blob/master/example/basic/index.html">example/basic/index.html</a>
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob.overlay/blob/master/example/banner_position_size/index.html">example/banner_position_size/index.html</a>
+<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/basic/index.html">example/basic/index.html</a>
+<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/banner_position_size/index.html">example/banner_position_size/index.html</a>
 
