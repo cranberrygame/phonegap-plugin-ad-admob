@@ -2,12 +2,12 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.cranberrygame.phonegap.plugin.ad.admob"
-    version="1.0.3">
+    version="1.0.5">
 	
-    <name>Admob ad</name>
-    <description>Admob ad</description>
+    <name>Phonegap admob plugin</name>
+    <description>Phonegap admob plugin</description>
     <license>MIT</license>
-    <keywords>phonegap, admob, ads, free</keywords>
+    <keywords>phonegap, plugin, ad, admob, overlap, split</keywords>
     <repo>https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob</repo>
  	
     <js-module src="www/admob.js">

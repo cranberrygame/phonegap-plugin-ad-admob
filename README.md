@@ -1,7 +1,7 @@
 
 How to Install:
 
-cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob.overlay
+cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
 
 Change Log:
 <pre>
@@ -68,3 +68,7 @@ Example:
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/basic/index.html">example/basic/index.html</a>
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/banner_position_size/index.html">example/banner_position_size/index.html</a>
 
+Support:
+
+This is 100% Free
+<a href="https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=F9MJ2UY9EKXRN&lc=KR&item_name=Phonegap%20Admob%20plugin%20donation&currency_code=USD&bn=PP%2dDonationsBF%3abtn_donateCC_LG%2egif%3aNonHosted">You can support maintenance by donation</a>
