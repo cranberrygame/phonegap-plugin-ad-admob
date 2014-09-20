@@ -17,7 +17,7 @@ Change Log:
 </pre>
 To-Do:
 <pre>
-	supports other position: 'top-left', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom-right' on android, ios.
+	supports other position: 'top-left', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom-right' on ios.
 	supports banner reposition when orientation changes on ios.
 	supports SMART_BANNER resize when orientation changes on ios.	
 	supports ios split mode
