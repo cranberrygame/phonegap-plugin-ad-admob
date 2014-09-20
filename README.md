@@ -10,14 +10,18 @@ Change Log:
 	Added additional example (example/banner_position_size/index.html)
 2014.9.18
 	supports isTest
-	supports other position: 'top-left', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom-right'.
-	supports SMART_BANNER resize when orientation changes.
+	supports other position: 'top-left', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom-right' on android, wp8.
+	supports SMART_BANNER resize when orientation changes on android.
 2014.9.20
-	supports isOverlap
+	supports isOverlap on android, ios, wp8
 </pre>
 To-Do:
 <pre>
-	final full test
+	supports other position: 'top-left', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom-right' on android, ios.
+	supports banner reposition when orientation changes on ios.
+	supports SMART_BANNER resize when orientation changes on ios.	
+	supports ios split mode
+	supports wp8 split mode
 </pre>	
 How to Use:
 
@@ -54,12 +58,12 @@ size: 	'BANNER' (320x50, Phones and Tablets)
 */
 window.admob.showBannerAd('top-center', 'SMART_BANNER');
 window.admob.showBannerAd('bottom-center', 'SMART_BANNER');
-window.admob.refreshBannerAd();
+window.admob.reloadBannerAd();
 window.admob.hideBannerAd();
 
 window.admob.preloadFullScreenAd();
 window.admob.showFullScreenAd();
-window.admob.refreshFullScreenAd();
+window.admob.reloadFullScreenAd();
 
 </pre>
 

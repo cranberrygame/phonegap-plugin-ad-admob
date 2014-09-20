@@ -19,12 +19,12 @@ module.exports = {
             []
         ); 
     },
-	refreshBannerAd: function(successCallback, errorCallback) {
+	reloadBannerAd: function(successCallback, errorCallback) {
         cordova.exec(
             successCallback,
             errorCallback,
             'Admob',
-            'refreshBannerAd',
+            'reloadBannerAd',
             []
         ); 
     },
@@ -67,7 +67,7 @@ module.exports = {
             []
         ); 
     },
-	refreshFullScreenAd: function(successCallback, errorCallback) {
+	reloadFullScreenAd: function(successCallback, errorCallback) {
 		var self = this;	
         cordova.exec(
             function (result) {
@@ -83,7 +83,7 @@ module.exports = {
 			},
             errorCallback,
             'Admob',
-            'refreshFullScreenAd',
+            'reloadFullScreenAd',
             []
         ); 
     },	

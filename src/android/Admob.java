@@ -61,7 +61,26 @@ class Util {
 	        case Surface.ROTATION_270: return 270;
 	    }
 	    return 0;
-	}	
+	}
+
+	public static final String md5(final String s) {
+        try {
+            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+            digest.update(s.getBytes());
+            byte messageDigest[] = digest.digest();
+            StringBuffer hexString = new StringBuffer();
+            for (int i = 0; i < messageDigest.length; i++) {
+                String h = Integer.toHexString(0xFF & messageDigest[i]);
+                while (h.length() < 2)
+                    h = "0" + h;
+                hexString.append(h);
+            }
+            return hexString.toString();
+
+        } catch (NoSuchAlgorithmException e) {
+        }
+        return "";
+    }
 }
 
 public class Admob extends CordovaPlugin {
@@ -113,7 +132,7 @@ public class Admob extends CordovaPlugin {
 						Log.d("Admob", String.format("position: %s, size: %s", position, size));
 						//Util.alert(cordova.getActivity(), String.format("position: %s, size: %s", position, size));
 						if (isOverlap)
-							addEvent_overlay();
+							addEvent_overlap();
 						else
 							addEvent_split();
 					}
@@ -123,7 +142,7 @@ public class Admob extends CordovaPlugin {
 	        }		    
 		});
     }
-	private void addEvent_overlay() {
+	private void addEvent_overlap() {
 		//http://stackoverflow.com/questions/11281562/android-admob-resize-on-landscape
 		if (bannerView != null) {							
 			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
@@ -227,7 +246,7 @@ public class Admob extends CordovaPlugin {
 
 				return true;
 			}
-			else if (action.equals("refreshBannerAd")) {
+			else if (action.equals("reloadBannerAd")) {
 				//Activity activity=cordova.getActivity();
 				//webView
 				
@@ -235,7 +254,7 @@ public class Admob extends CordovaPlugin {
 		        cordova.getActivity().runOnUiThread(new Runnable(){
 		            @Override
 		            public void run() {
-						_refreshBannerAd();
+						_reloadBannerAd();
 
 						delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
 						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
@@ -310,7 +329,7 @@ public class Admob extends CordovaPlugin {
 				
 				return true;
 			}
-			else if (action.equals("refreshFullScreenAd")) {
+			else if (action.equals("reloadFullScreenAd")) {
 				//Activity activity=cordova.getActivity();
 				//webView
 				//
@@ -321,7 +340,7 @@ public class Admob extends CordovaPlugin {
 				cordova.getActivity().runOnUiThread(new Runnable(){
 		            @Override
 		            public void run() {
-						_refreshFullScreenAd();
+						_reloadFullScreenAd();
 
 						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
 						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
@@ -378,7 +397,7 @@ public class Admob extends CordovaPlugin {
 	private void _preloadBannerAd(){
 
 		if (isOverlap)
-			_preloadBannerAd_overlay();
+			_preloadBannerAd_overlap();
 		else
 			_preloadBannerAd_split();
 			
@@ -415,9 +434,9 @@ public class Admob extends CordovaPlugin {
 			}		
 		}
 
-		_refreshBannerAd();
+		_reloadBannerAd();
 	}
-	private void _preloadBannerAd_overlay(){
+	private void _preloadBannerAd_overlap(){
 		if(bannerViewLayout == null) {
 			bannerViewLayout = new RelativeLayout(cordova.getActivity());//	
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
@@ -447,7 +466,7 @@ public class Admob extends CordovaPlugin {
 			}
 		}	
 	}
-	private void _refreshBannerAd(){
+	private void _reloadBannerAd(){
 		if (bannerView != null) {
 			//https://developer.android.com/reference/com/google/android/gms/ads/AdRequest.Builder.html
 			AdRequest.Builder builder = new AdRequest.Builder();
@@ -457,31 +476,13 @@ public class Admob extends CordovaPlugin {
 				//Java code to force all devices to show test ads
 				//http://stackoverflow.com/questions/9028852/java-code-to-force-all-devices-to-show-test-ads
  				String ANDROID_ID = Settings.Secure.getString(cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-				String deviceId = md5(ANDROID_ID).toUpperCase();
+				String deviceId = Util.md5(ANDROID_ID).toUpperCase();
 				builder.addTestDevice(deviceId);		
 			}
 			AdRequest request = builder.build();
 			bannerView.loadAd(request);	            	
 		}
 	}
-    public static final String md5(final String s) {
-        try {
-            MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
-            digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
-            StringBuffer hexString = new StringBuffer();
-            for (int i = 0; i < messageDigest.length; i++) {
-                String h = Integer.toHexString(0xFF & messageDigest[i]);
-                while (h.length() < 2)
-                    h = "0" + h;
-                hexString.append(h);
-            }
-            return hexString.toString();
-
-        } catch (NoSuchAlgorithmException e) {
-        }
-        return "";
-    }	
 	private void _showBannerAd(String position, String size){
 		this.position = position;	
 		this.size = size;
@@ -494,11 +495,11 @@ public class Admob extends CordovaPlugin {
 		}
 
 		if (isOverlap)
-			_showBannerAd_overlay(position,size);
+			_showBannerAd_overlap(position,size);
 		else
 			_showBannerAd_split(position,size);
 	}
-	private void _showBannerAd_overlay(String position, String size){
+	private void _showBannerAd_overlap(String position, String size){
 		//http://tigerwoods.tistory.com/11
 		//http://developer.android.com/reference/android/widget/RelativeLayout.html
 		//http://stackoverflow.com/questions/24900725/admob-banner-poitioning-in-android-on-bottom-of-the-screen-using-no-xml-relative
@@ -566,11 +567,11 @@ public class Admob extends CordovaPlugin {
 	}	
 	private void _hideBannerAd(){
 		if (isOverlap)
-			_hideBannerAd_overlay();
+			_hideBannerAd_overlap();
 		else
 			_hideBannerAd_split();
 	}
-	private void _hideBannerAd_overlay(){
+	private void _hideBannerAd_overlap(){
 		if (bannerView != null) {							
 			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
 			//if banner is showing
@@ -600,16 +601,16 @@ public class Admob extends CordovaPlugin {
 			interstitialView.setAdListener(new MyInterstitialViewListener(interstitialView, this));					
 		}		
 		
-		_refreshFullScreenAd();		
+		_reloadFullScreenAd();		
 	}
-	private void _refreshFullScreenAd(){
+	private void _reloadFullScreenAd(){
 		if (interstitialView != null) {	
 			AdRequest.Builder builder = new AdRequest.Builder();
 			if(isTest) {
 				builder.addTestDevice(AdRequest.DEVICE_ID_EMULATOR); 
 				//builder.addTestDevice("INSERT_YOUR_HASHED_DEVICE_ID_HERE");				
  				String ANDROID_ID = Settings.Secure.getString(cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
-				String deviceId = md5(ANDROID_ID).toUpperCase();
+				String deviceId = Util.md5(ANDROID_ID).toUpperCase();
 				builder.addTestDevice(deviceId);		
 			}
 			AdRequest request = builder.build();			

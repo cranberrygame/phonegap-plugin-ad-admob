@@ -31,9 +31,9 @@
 - (void)preloadBannerAd: (CDVInvokedUrlCommand*)command;
 - (void)showBannerAd: (CDVInvokedUrlCommand*)command;
 - (void)hideBannerAd: (CDVInvokedUrlCommand*)command;
-- (void)refreshBannerAd: (CDVInvokedUrlCommand*)command;
+- (void)reloadBannerAd: (CDVInvokedUrlCommand*)command;
 - (void)preloadFullScreenAd: (CDVInvokedUrlCommand*)command;
 - (void)showFullScreenAd: (CDVInvokedUrlCommand*)command;
-- (void)refreshFullScreenAd: (CDVInvokedUrlCommand*)command;
+- (void)reloadFullScreenAd: (CDVInvokedUrlCommand*)command;
 
 @end

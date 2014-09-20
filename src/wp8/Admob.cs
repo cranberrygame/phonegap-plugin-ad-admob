@@ -3,6 +3,7 @@
 // Phonegap plugin: http://www.github.com/cranberrygame
 // Construct2 phonegap plugin: https://www.scirra.com/forum/viewtopic.php?f=153&t=109586
 // License: MIT (http://opensource.org/licenses/MIT)
+using System;
 using System.Windows;
 using System.Runtime.Serialization;
 using WPCordovaClassLib.Cordova;
@@ -20,8 +21,8 @@ namespace Cordova.Extension.Commands
     {
 		private string adUnit;
 		private string adUnitFullScreen;
-		private boolean isOverlap;
-		private boolean isTest;
+		private bool isOverlap;
+		private bool isTest;
 		//
         private AdView bannerView;
         private InterstitialAd interstitialView;
@@ -38,9 +39,9 @@ namespace Cordova.Extension.Commands
             Debug.WriteLine("adUnit: " + adUnit);
             string adUnitFullScreen = JsonHelper.Deserialize<string[]>(args)[1];
             Debug.WriteLine("adUnitFullScreen: " + adUnitFullScreen);
-            boolean isOverlap = JsonHelper.Deserialize<string[]>(args)[2];
+            bool isOverlap = Convert.ToBoolean(JsonHelper.Deserialize<string[]>(args)[2]);
             Debug.WriteLine("isOverlap: " + isOverlap);
-            boolean isTest = JsonHelper.Deserialize<string[]>(args)[3];
+            bool isTest = Convert.ToBoolean(JsonHelper.Deserialize<string[]>(args)[3]);
             Debug.WriteLine("isTest: " + isTest);
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
@@ -63,13 +64,11 @@ namespace Cordova.Extension.Commands
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR));
             });
         }
-        public void refreshBannerAd(string args)
+        public void reloadBannerAd(string args)
         {
-			bannerAdPreloaded = true;
-
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                _refreshBannerAd();
+                _reloadBannerAd();
 
 				DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR));
@@ -116,13 +115,13 @@ namespace Cordova.Extension.Commands
 				DispatchCommandResult(pr);				
             });
         }
-        public void refreshFullScreenAd(string args)
+        public void reloadFullScreenAd(string args)
         {
 			fullScreenAdPreloaded = true;			
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
-                _refreshFullScreenAd();
+                _reloadFullScreenAd();
 
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR));
@@ -147,7 +146,7 @@ namespace Cordova.Extension.Commands
             });		
         }
 		//---------------------------
-        private void _setUp(string adUnit, string adUnitFullScreen, boolean isOverlap, boolean isTest)
+        private void _setUp(string adUnit, string adUnitFullScreen, bool isOverlap, bool isTest)
         {
 			this.adUnit = adUnit;
 			this.adUnitFullScreen = adUnitFullScreen;
@@ -155,6 +154,44 @@ namespace Cordova.Extension.Commands
 			this.isTest = isTest;
         }		
         private void _preloadBannerAd()
+        {
+			if (isOverlap)
+				_preloadBannerAd_overlap();
+			else
+				_preloadBannerAd_split();
+			
+            if (bannerView == null)
+            {
+				if(size == null) {
+					size = "SMART_BANNER";
+				}			
+				//
+                AdFormats format = AdFormats.Banner;
+				//https://developers.google.com/mobile-ads-sdk/docs/admob/wp/banner		
+				if (size.Equals("BANNER")) {
+					format = AdFormats.Banner;//Banner (320x50, Phones and Tablets)
+				}
+				else if (size.Equals("SMART_BANNER")) {
+					format = AdFormats.SmartBanner;//Smart banner (Auto size, Phones and Tablets) //https://developers.google.com/mobile-ads-sdk/docs/admob/android/banner#smart
+				} 				
+				else {
+					format = AdFormats.SmartBanner;
+				}
+				//
+                bannerView = new AdView
+                {
+                    //Format = AdFormats.Banner,
+                    //Format = AdFormats.SmartBanner,
+                    Format = format,
+                    AdUnitID = this.adUnit
+                };
+                bannerView.ReceivedAd += OnBannerViewReceivedAd;
+                bannerView.FailedToReceiveAd += OnBannerViewFailedToReceiveAd;
+            }
+			
+			_reloadBannerAd();
+        }
+        private void _preloadBannerAd_overlap()
         {
             if (bannerView != null)
             {
@@ -172,40 +209,12 @@ namespace Cordova.Extension.Commands
                     }
                 }
             }
-			
-            //if (bannerView == null)
-            //{
-				if(size == null) {
-					size = "SMART_BANNER";
-				}			
-				//
-                AdFormats format = AdFormats.Banner;
-				//https://developers.google.com/mobile-ads-sdk/docs/admob/wp/banner		
-				if (size.Equals("BANNER")) {
-					format = AdFormats.Banner;//Banner (320x50, Phones and Tablets)
-				}
-				else if (size.Equals("SMART_BANNER")) {
-					format = AdFormats.SmartBanner;//Smart banner (Auto size, Phones and Tablets) //https://developers.google.com/mobile-ads-sdk/docs/admob/android/banner#smart
-				} 				
-				else {
-					format = AdFormats.SmartBanner;
-				}
-			
-				//
-                bannerView = new AdView
-                {
-                    //Format = AdFormats.Banner,
-                    //Format = AdFormats.SmartBanner,
-                    Format = format,
-                    AdUnitID = this.adUnit
-                };
-                bannerView.ReceivedAd += OnBannerViewReceivedAd;
-                bannerView.FailedToReceiveAd += OnBannerViewFailedToReceiveAd;
-            //}
-			
-			_refreshBannerAd();
-        }
-        private void _refreshBannerAd()
+		}
+        private void _preloadBannerAd_split()
+        { 
+		}
+		
+        private void _reloadBannerAd()
         {
             if (bannerView != null)
 			{
@@ -228,6 +237,13 @@ namespace Cordova.Extension.Commands
 				_preloadBannerAd();
 			}			
 			
+			if (isOverlap)
+				_showBannerAd_overlap(position,size);
+			else
+				_showBannerAd_split(position,size);
+        }
+        private void _showBannerAd_overlap(string position, string size)
+        {
             PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
             if (frame != null)
             {
@@ -237,60 +253,73 @@ namespace Cordova.Extension.Commands
                     Grid grid = page.FindName("LayoutRoot") as Grid;
                     if (grid != null)
                     {
-/*					
-                        if (position == "top-center")
+                        if (position.Equals("top-left"))
                         {
-							bannerView.VerticalAlignment = VerticalAlignment.Top;//
-                        }
-                        else{
-                            bannerView.VerticalAlignment = VerticalAlignment.Bottom;
-                        }
-*/						
-						if (position.equals("top-left")) {		
-						}
-						else if (position.equals("top-center")) {		
                             bannerView.VerticalAlignment = VerticalAlignment.Top;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Center;
-						}
-						else if (position.equals("top-right")) {		
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Left;
+                        }
+                        else if (position.Equals("top-center"))
+                        {
                             bannerView.VerticalAlignment = VerticalAlignment.Top;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Right;
-						}
-						else if (position.equals("left")) {
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Center;
+                        }
+                        else if (position.Equals("top-right"))
+                        {
+                            bannerView.VerticalAlignment = VerticalAlignment.Top;
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Right;
+                        }
+                        else if (position.Equals("left"))
+                        {
                             bannerView.VerticalAlignment = VerticalAlignment.Center;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Left;
-						}
-						else if (position.equals("center")) {
-						    bannerView.VerticalAlignment = VerticalAlignment.Center;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Center;
-						}
-						else if (position.equals("right")) {		
-						    bannerView.VerticalAlignment = VerticalAlignment.Center;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Right;
-						}
-						else if (position.equals("bottom-left")) {
-						    bannerView.VerticalAlignment = VerticalAlignment.Bottom;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Left;						
-						}
-						else if (position.equals("bottom-center")) {
-						    bannerView.VerticalAlignment = VerticalAlignment.Bottom;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Center;
-						}
-						else if (position.equals("bottom-right")) {		
-						    bannerView.VerticalAlignment = VerticalAlignment.Bottom;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Right;
-						}
-						else {		
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Left;
+                        }
+                        else if (position.Equals("center"))
+                        {
+                            bannerView.VerticalAlignment = VerticalAlignment.Center;
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Center;
+                        }
+                        else if (position.Equals("right"))
+                        {
+                            bannerView.VerticalAlignment = VerticalAlignment.Center;
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Right;
+                        }
+                        else if (position.Equals("bottom-left"))
+                        {
+                            bannerView.VerticalAlignment = VerticalAlignment.Bottom;
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Left;
+                        }
+                        else if (position.Equals("bottom-center"))
+                        {
+                            bannerView.VerticalAlignment = VerticalAlignment.Bottom;
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Center;
+                        }
+                        else if (position.Equals("bottom-right"))
+                        {
+                            bannerView.VerticalAlignment = VerticalAlignment.Bottom;
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Right;
+                        }
+                        else
+                        {
                             bannerView.VerticalAlignment = VerticalAlignment.Top;
-                            bannerView.HorizontalAlignment = VerticalAlignment.Center;
-						}
-				
+                            bannerView.HorizontalAlignment = HorizontalAlignment.Center;
+                        }
+
                         grid.Children.Add(bannerView);
                     }
                 }
             }
-        }
+		}		
+        private void _showBannerAd_split(string position, string size)
+        { 		
+		}		
         private void _hideBannerAd()
+        {
+			if (isOverlap)
+				_hideBannerAd_overlap();
+			else
+				_hideBannerAd_split();
+        }
+        private void _hideBannerAd_overlap()
         {
             if (bannerView != null)
             {
@@ -308,7 +337,10 @@ namespace Cordova.Extension.Commands
                     }
                 }
             }
-        }
+		}		
+        private void _hideBannerAd_split()
+        {		
+		}		
         private void _preloadFullScreenAd()
         {
             if (interstitialView == null)
@@ -323,9 +355,9 @@ namespace Cordova.Extension.Commands
 				interstitialView.DismissingOverlay += OnInterstitialViewDismissingOverlay;
             }
 			
-			_refreshFullScreenAd();
+			_reloadFullScreenAd();
         }
-        private void _refreshFullScreenAd()
+        private void _reloadFullScreenAd()
         {
 			if (interstitialView != null) {			
 				AdRequest adRequest = new AdRequest();
@@ -338,10 +370,6 @@ namespace Cordova.Extension.Commands
         private void _showFullScreenAd()
         {
 			if(fullScreenAdPreloaded) {
-				if (interstitialView == null) {
-					_preloadFullScreenAd();
-				}
-			
 				interstitialView.ShowAd();
 				
 				fullScreenAdPreloaded = false;

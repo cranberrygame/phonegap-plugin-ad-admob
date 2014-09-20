@@ -73,12 +73,13 @@
 	NSLog(@"%@", adUnit);
 	NSString *adUnitFullScreen = [command.arguments objectAtIndex: 1];
 	NSLog(@"%@", adUnitFullScreen);
-	BOOL isOverlap = [command.arguments objectAtIndex: 2];
-	NSLog(@"%@", isOverlap);
-	BOOL isTest = [command.arguments objectAtIndex: 3];
-	NSLog(@"%@", isTest);
+	BOOL isOverlap = [[command.arguments objectAtIndex: 2] boolValue];
+	NSLog(@"%b", isOverlap);
+	BOOL isTest = [[command.arguments objectAtIndex: 3] boolValue];
+	NSLog(@"%b", isTest);
 
-	[self _setUp:adUnit anAdUnitFullScreen:adUnitFullScreen aIsTest:isTest];
+	[self _setUp:adUnit anAdUnitFullScreen:adUnitFullScreen aIsOverlap:isOverlap aIsTest:isTest];
+
     
 	[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
 	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
@@ -95,12 +96,10 @@
 	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
 }
 
-- (void)refreshBannerAd: (CDVInvokedUrlCommand*)command {
+- (void)reloadBannerAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
 
-	self.bannerAdPreloaded = YES;	
-	
-	[self _refreshBannerAd];
+	[self _reloadBannerAd];
 
 	[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
 	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
@@ -145,12 +144,12 @@
     self.interstitialViewCallbackId = command.callbackId;	
 }
 
-- (void)refreshFullScreenAd: (CDVInvokedUrlCommand*)command {
+- (void)reloadFullScreenAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
 
 	self.fullScreenAdPreloaded = YES;	
 	
-	[self _refreshFullScreenAd];
+	[self _reloadFullScreenAd];
 
 	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
 	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
@@ -178,7 +177,7 @@
 }
 
 //-------------------------------------------------------------------
-- (void) _setUp:(NSString *)adUnit anAdUnitFullScreen:(NSString *)adUnitFullScreen aIsOverlay:(BOOL)isOverlap aIsTest:(BOOL)isTest
+- (void) _setUp:(NSString *)adUnit anAdUnitFullScreen:(NSString *)adUnitFullScreen aIsOverlap:(BOOL)isOverlap aIsTest:(BOOL)isTest
 {
 	self.adUnit = adUnit;
 	self.adUnitFullScreen = adUnitFullScreen;
@@ -187,14 +186,13 @@
 }
 - (void) _preloadBannerAd
 {
-    if (bannerView != nil)
+	if (isOverlap)
+		[self _preloadBannerAd_overlap];
+	else
+		[self _preloadBannerAd_split];
+
+    if (bannerView == nil)
     {
-        //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
-        [self.bannerView removeFromSuperview];
-	}
-	
-    //if (bannerView == nil)
-    //{
 		if(size == nil) {
 			size = @"SMART_BANNER";
 		}	
@@ -239,11 +237,24 @@
 		bannerView.adUnitID = self.adUnit;
 		bannerView.delegate = self;
 		bannerView.rootViewController = self.viewController;//
-	//}
+	}
     
-    [self _refreshBannerAd];
+    [self _reloadBannerAd];
 }
-- (void) _refreshBannerAd
+- (void) _preloadBannerAd_overlap
+{
+    if (bannerView != nil)
+    {
+        //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
+        [self.bannerView removeFromSuperview];
+		self.bannerView = nil;
+	}
+}
+- (void) _preloadBannerAd_split
+{
+
+}
+- (void) _reloadBannerAd
 {
 	if (bannerView != nil)
 	{
@@ -274,9 +285,67 @@
 		[self _preloadBannerAd];
 	}
 			
+	if (isOverlap)
+		[self _showBannerAd_overlap:position aSize:size];
+	else
+		[self _showBannerAd_split:position aSize:size];
+}
+- (void) _showBannerAd_overlap:(NSString *)position aSize:(NSString *)size
+{
+/*
+		//http://tigerwoods.tistory.com/11
+		//http://developer.android.com/reference/android/widget/RelativeLayout.html
+		//http://stackoverflow.com/questions/24900725/admob-banner-poitioning-in-android-on-bottom-of-the-screen-using-no-xml-relative
+		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
+		if (position.equals("top-left")) {
+			Log.d("Admob", "top-left");		
+			params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);		
+		}
+		else if (position.equals("top-center")) {		
+			params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		}
+		else if (position.equals("top-right")) {		
+			params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		}
+		else if (position.equals("left")) {
+			params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);
+			params.addRule(RelativeLayout.CENTER_VERTICAL);			
+		}
+		else if (position.equals("center")) {
+			params.addRule(RelativeLayout.CENTER_HORIZONTAL);	
+			params.addRule(RelativeLayout.CENTER_VERTICAL);	
+		}
+		else if (position.equals("right")) {	
+			params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+			params.addRule(RelativeLayout.CENTER_VERTICAL);	
+		}
+		else if (position.equals("bottom-left")) {		
+			params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);		
+			params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);		
+		}
+		else if (position.equals("bottom-center")) {
+			
+			params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		}
+		else if (position.equals("bottom-right")) {
+			params.addRule(RelativeLayout.ALIGN_PARENT_BOTTOM);
+			params.addRule(RelativeLayout.ALIGN_PARENT_RIGHT);
+		}
+		else {		
+			params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			params.addRule(RelativeLayout.CENTER_HORIZONTAL);
+		}
+		
+		//bannerViewLayout.addView(bannerView, params);
+		bannerView.setLayoutParams(params);
+		bannerViewLayout.addView(bannerView);
+*/
     CGRect bannerFrame = bannerView.frame;
-	if ([position isEqualToString:@"top-center"]) {
-		    
+	if ([position isEqualToString:@"top-center"]) {		    
 		bannerFrame.origin.y = 0;
 	}
 	else {
@@ -287,13 +356,42 @@
     //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
 	[self.webView addSubview:bannerView];
 }
+- (void) _showBannerAd_split:(NSString *)position aSize:(NSString *)size
+{
+/*
+		if (webView != null) {							
+			ViewGroup parentView = (ViewGroup)webView.getParent();
+			if (parentView != null) {
+				if (position.equals("top-left") || position.equals("top-center")|| position.equals("top-right") || position.equals("left") || position.equals("center") || position.equals("right")) {	
+					parentView.addView(bannerView, 0);
+				}
+				else {		
+					parentView.addView(bannerView);
+				}
+				//parentView.bringToFront();
+			}
+		}
+*/
+
+}
 - (void) _hideBannerAd
+{
+	if (isOverlap)
+		[self _hideBannerAd_overlap];
+	else
+		[self _hideBannerAd_split];
+}
+- (void) _hideBannerAd_overlap
 {
     if (bannerView != nil)
     {
         //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
         [self.bannerView removeFromSuperview];
+		bannerView = nil;	
 	}
+}
+- (void) _hideBannerAd_split
+{
 }
 - (void) _preloadFullScreenAd
 {    
@@ -303,28 +401,35 @@
         self.interstitialView.delegate = self;
     }	
 
-	[self _refreshFullScreenAd];
+	[self _reloadFullScreenAd];
 }
-- (void) _refreshFullScreenAd
+- (void) _reloadFullScreenAd
 {
+    if (interstitialView == nil || self.interstitialView.hasBeenUsed){//ios only //An interstitial object can only be used once for ios
+        self.interstitialView = [[GADInterstitial alloc] init];
+        self.interstitialView.adUnitID = adUnitFullScreen;
+        self.interstitialView.delegate = self;
+    }
+    
 	if (interstitialView != nil) {
 		GADRequest *request = [GADRequest request];
 		if (isTest) {
+		/*
 			request.testDevices =
 			[NSArray arrayWithObjects:
 			GAD_SIMULATOR_ID,
+			// TODO: Add your device/simulator test identifiers here. They are printed to the console when the app is launched.			
 			nil];
-		}		 
+		*/
+			//https://github.com/acyl/phonegap-plugins-1/blob/master/iOS/AdMobPlugin/AdMobPlugin.m
+			request.testing = YES;
+		}		
 		[self.interstitialView loadRequest:request];
 	}
 }
 - (void) _showFullScreenAd
 {
 	if(fullScreenAdPreloaded) {
-		if (interstitialView == nil || self.interstitialView.hasBeenUsed){
-			[self _preloadFullScreenAd];
-		}
-		
 		[self.interstitialView presentFromRootViewController:self.viewController];
 		
 		fullScreenAdPreloaded = NO;
