@@ -60,8 +60,12 @@ namespace Cordova.Extension.Commands
             {   
                 _preloadBannerAd();
                 
-				DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
+				//DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR));
+				
+				PluginResult pr = new PluginResult(PluginResult.Status.OK);
+				pr.KeepCallback = true;
+				DispatchCommandResult(pr);					
             });
         }
         public void reloadBannerAd(string args)
@@ -70,8 +74,12 @@ namespace Cordova.Extension.Commands
             {
                 _reloadBannerAd();
 
-				DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
+				//DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR));
+				
+				PluginResult pr = new PluginResult(PluginResult.Status.OK);
+				pr.KeepCallback = true;
+				DispatchCommandResult(pr);					
             });
         }		
         public void showBannerAd(string args)
@@ -85,8 +93,12 @@ namespace Cordova.Extension.Commands
             {
                 _showBannerAd(position, size);
 
-				DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
+				//DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR));
+				
+				PluginResult pr = new PluginResult(PluginResult.Status.OK);
+				pr.KeepCallback = true;
+				DispatchCommandResult(pr);					
             });
         }
         public void hideBannerAd(string args)
@@ -95,8 +107,12 @@ namespace Cordova.Extension.Commands
             {
                 _hideBannerAd();
 
-				DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
+				//DispatchCommandResult(new PluginResult(PluginResult.Status.OK));			
 				//DispatchCommandResult(new PluginResult(PluginResult.Status.ERROR));
+				
+				PluginResult pr = new PluginResult(PluginResult.Status.OK);
+				pr.KeepCallback = true;
+				DispatchCommandResult(pr);					
             });	
         }
         public void preloadFullScreenAd(string args)
@@ -187,6 +203,8 @@ namespace Cordova.Extension.Commands
                 };
                 bannerView.ReceivedAd += OnBannerViewReceivedAd;
                 bannerView.FailedToReceiveAd += OnBannerViewFailedToReceiveAd;
+                bannerView.ShowingOverlay += OnBannerViewShowingOverlay;
+                bannerView.DismissingOverlay += OnBannerViewDismissingOverlay;				
             }
 			
 			_reloadBannerAd();
@@ -370,7 +388,14 @@ namespace Cordova.Extension.Commands
         private void _showFullScreenAd()
         {
 			if(fullScreenAdPreloaded) {
-				interstitialView.ShowAd();
+				//An exception of type 'System.NullReferenceException' occurred in GoogleAds.DLL and wasn't handled before a managed/native boundary
+                try
+                {
+                    interstitialView.ShowAd();
+                }
+                catch (Exception ex)
+                {
+                }
 				
 				fullScreenAdPreloaded = false;
 			}
@@ -378,16 +403,31 @@ namespace Cordova.Extension.Commands
 				_preloadFullScreenAd();
 			}
         }
-		//
+		//bannerView.ReceivedAd
         private void OnBannerViewReceivedAd(object sender, AdEventArgs e)
         {
             Debug.WriteLine("OnBannerViewReceivedAd");
+			
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onBannerAdLoaded");
+			pr.KeepCallback = true;
+			DispatchCommandResult(pr);				
         }
-
+		//bannerView.FailedToReceiveAd
         private void OnBannerViewFailedToReceiveAd(object sender, AdErrorEventArgs errorCode)
         {
             Debug.WriteLine("OnBannerViewFailedToReceiveAd " + errorCode.ErrorCode);
         }
+		//bannerView.ShowingOverlay
+        private void OnBannerViewShowingOverlay(object sender, AdEventArgs e)
+        {
+            Debug.WriteLine("OnBannerViewShowingOverlay");			
+        }
+		//bannerView.DismissingOverlay
+        private void OnBannerViewDismissingOverlay(object sender, AdEventArgs e)
+        {
+            Debug.WriteLine("OnBannerViewDismissingOverlay");
+        }		
+		
 		//interstitialView.ReceivedAd
         private void OnInterstitialViewReceivedAd(object sender, AdEventArgs e)
         {
@@ -412,6 +452,7 @@ namespace Cordova.Extension.Commands
         private void OnInterstitialViewShowingOverlay(object sender, AdEventArgs e)
         {
             Debug.WriteLine("OnInterstitialViewPresentScreen");
+			
 			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdShown");
 			pr.KeepCallback = true;
 			DispatchCommandResult(pr);			
@@ -419,7 +460,8 @@ namespace Cordova.Extension.Commands
         //interstitialView.DismissingOverlay
         private void OnInterstitialViewDismissingOverlay(object sender, AdEventArgs e)
         {
-            Debug.WriteLine("OnInterstitialViewDismissScreen");		
+            Debug.WriteLine("OnInterstitialViewDismissScreen");	
+			
 			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdClosed");
 			pr.KeepCallback = true;
 			DispatchCommandResult(pr);

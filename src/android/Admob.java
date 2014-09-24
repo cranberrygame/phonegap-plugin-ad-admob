@@ -84,6 +84,8 @@ class Util {
 }
 
 public class Admob extends CordovaPlugin {
+	private static final String LOG_TAG = "Admob";
+	//
 	private String adUnit;
 	private String adUnitFullScreen;
 	private boolean isOverlap;
@@ -92,6 +94,7 @@ public class Admob extends CordovaPlugin {
 	private AdView bannerView; 
 	private RelativeLayout bannerViewLayout;
     private InterstitialAd interstitialView;
+	public CallbackContext bannerViewCB;
 	public CallbackContext interstitialViewCB;
 	//
 	public boolean bannerAdPreloaded;	
@@ -121,15 +124,15 @@ public class Admob extends CordovaPlugin {
 					return;
 				}
 
-				Log.d("Admob", "onLayoutChange");
+				Log.d(LOG_TAG, "onLayoutChange");
 				//Util.alert(cordova.getActivity(), "onLayoutChange");
 				
 				int orientation = Util.getDisplayRotation(cordova.getActivity());
 				if(orientation != lastOrientation) {
-					Log.d("Admob", String.format("orientation: %d", orientation));
+					Log.d(LOG_TAG, String.format("orientation: %d", orientation));
 					//Util.alert(cordova.getActivity(), String.format("orientation: %d", orientation));
 					if (size != null && size.equals("SMART_BANNER")) {
-						Log.d("Admob", String.format("position: %s, size: %s", position, size));
+						Log.d(LOG_TAG, String.format("position: %s, size: %s", position, size));
 						//Util.alert(cordova.getActivity(), String.format("position: %s, size: %s", position, size));
 						if (isOverlap)
 							addEvent_overlap();
@@ -151,7 +154,7 @@ public class Admob extends CordovaPlugin {
 				//bannerViewLayout.removeView(bannerView);
 				//bannerView.destroy();
 				//bannerView = null;				
-				Log.d("Admob", String.format("position: %s, size: %s", position, size));
+				Log.d(LOG_TAG, String.format("position: %s, size: %s", position, size));
 				//Util.alert(cordova.getActivity(), String.format("position: %s, size: %s", position, size));
 
 				//http://stackoverflow.com/questions/3072173/how-to-call-a-method-after-a-delay-in-android
@@ -173,7 +176,7 @@ public class Admob extends CordovaPlugin {
 				//parentView.removeView(bannerView);
 				//bannerView.destroy();
 				//bannerView = null;
-				Log.d("Admob", String.format("position: %s, size: %s", position, size));
+				Log.d(LOG_TAG, String.format("position: %s, size: %s", position, size));
 				//Util.alert(cordova.getActivity(), String.format("position: %s, size: %s", position, size));
 
 				//http://stackoverflow.com/questions/3072173/how-to-call-a-method-after-a-delay-in-android
@@ -189,203 +192,225 @@ public class Admob extends CordovaPlugin {
 	}
 	
 	@Override
-	public boolean execute(String action, JSONArray args,CallbackContext callbackContext) {
+	public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
 		PluginResult result = null;
 		
-		try {		
-			//args.length()
-			//args.getString(0)
-			//args.getString(1)
-			//args.Int(0)
-			//args.Int(1)
-			//args.getBoolean(0)
-			//args.getBoolean(1)
+		//args.length()
+		//args.getString(0)
+		//args.getString(1)
+		//args.Int(0)
+		//args.Int(1)
+		//args.getBoolean(0)
+		//args.getBoolean(1)
+		//JSONObject json = args.optJSONObject(0);
+		//json.optString("adUnit")
+		//json.optString("adUnitFullScreen")
+		//JSONObject inJson = json.optJSONObject("inJson");
 
-			if (action.equals("setUp")) {
-				//Activity activity=cordova.getActivity();
-				//webView
-				//
-				final String adUnit = args.getString(0);				
-				Log.d("Admob", adUnit);
-				final String adUnitFullScreen = args.getString(1);				
-				Log.d("Admob", adUnitFullScreen);
-				final boolean isOverlap = args.getBoolean(2);				
-				Log.d("Admob", isOverlap?"true":"false");
-				final boolean isTest = args.getBoolean(3);				
-				Log.d("Admob", isTest?"true":"false");
-				
-				final CallbackContext delayedCB = callbackContext;		
-				cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {						
-						_setUp(adUnit, adUnitFullScreen, isOverlap, isTest);
+		if (action.equals("setUp")) {
+			//Activity activity=cordova.getActivity();
+			//webView
+			//
+			final String adUnit = args.getString(0);				
+			Log.d(LOG_TAG, adUnit);
+			final String adUnitFullScreen = args.getString(1);				
+			Log.d(LOG_TAG, adUnitFullScreen);
+			final boolean isOverlap = args.getBoolean(2);				
+			Log.d(LOG_TAG, isOverlap?"true":"false");
+			final boolean isTest = args.getBoolean(3);				
+			Log.d(LOG_TAG, isTest?"true":"false");
+			
+			final CallbackContext delayedCB = callbackContext;		
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {						
+					_setUp(adUnit, adUnitFullScreen, isOverlap, isTest);
 
-						delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-		            }
-		        });
+					delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+				}
+			});
 
-				return true;
-			}			
-			else if (action.equals("preloadBannerAd")) {
-				//Activity activity=cordova.getActivity();
-				//webView
+			return true;
+		}			
+		else if (action.equals("preloadBannerAd")) {
+			//Activity activity=cordova.getActivity();
+			//webView
 
-				bannerAdPreloaded = true;
-				
-				final CallbackContext delayedCB = callbackContext;		
-				cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {						
-						_preloadBannerAd();
+			bannerAdPreloaded = true;
+			
+			final CallbackContext delayedCB = callbackContext;		
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {						
+					_preloadBannerAd();
 
-						delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-		            }
-		        });
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					pr.setKeepCallback(true);
+					delayedCB.sendPluginResult(pr);					
+				}
+			});
 
-				return true;
-			}
-			else if (action.equals("reloadBannerAd")) {
-				//Activity activity=cordova.getActivity();
-				//webView
-				
-				final CallbackContext delayedCB = callbackContext;
-		        cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {
-						_reloadBannerAd();
-
-						delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-		            }
-		        });
-				
-				return true;
-			}			
-			else if (action.equals("showBannerAd")) {
-				//Activity activity=cordova.getActivity();
-				//webView
-				//
-				final String position = args.getString(0);
-				Log.d("Admob", position);
-				final String size = args.getString(1);
-				Log.d("Admob", size);
-				
-				final CallbackContext delayedCB = callbackContext;
-		        cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {						
-						_showBannerAd(position, size);
-
-						delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-					}
-		        });				
-
-				return true;
-			}
-			else if (action.equals("hideBannerAd")) {
-				//Activity activity=cordova.getActivity();
-				//webView
-				//
-				
-				final CallbackContext delayedCB = callbackContext;
-		        cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {		            			            	
-						_hideBannerAd();
-
-						delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-		            }
-		        });
-		        
-				return true;
-			}
-			else if (action.equals("preloadFullScreenAd")) {
-				//Activity activity=cordova.getActivity();
-				//webView
-				//
-
-				fullScreenAdPreloaded = true;
-
-				final CallbackContext delayedCB = callbackContext;
-				cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {
-						_preloadFullScreenAd();
-
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-						
-						PluginResult pr = new PluginResult(PluginResult.Status.OK);
-						pr.setKeepCallback(true);
-						delayedCB.sendPluginResult(pr);							
-		            }
-		        });
-
-				interstitialViewCB = callbackContext;
-				
-				return true;
-			}
-			else if (action.equals("reloadFullScreenAd")) {
-				//Activity activity=cordova.getActivity();
-				//webView
-				//
-
-				fullScreenAdPreloaded = true;				
-				
-				final CallbackContext delayedCB = callbackContext;
-				cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {
-						_reloadFullScreenAd();
-
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-						
-						PluginResult pr = new PluginResult(PluginResult.Status.OK);
-						pr.setKeepCallback(true);
-						delayedCB.sendPluginResult(pr);	
-					}
-		        });
-
-				interstitialViewCB = callbackContext;
-				
-				return true;
-			}			
-			else if (action.equals("showFullScreenAd")) {
-				//Activity activity=cordova.getActivity();
-				//webView
-				//
-				
-				final CallbackContext delayedCB = callbackContext;
-				cordova.getActivity().runOnUiThread(new Runnable(){
-		            @Override
-		            public void run() {
-						_showFullScreenAd();
-
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-						//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-
-						PluginResult pr = new PluginResult(PluginResult.Status.OK);
-						pr.setKeepCallback(true);
-						delayedCB.sendPluginResult(pr);							
-		            }
-		        });
-
-				interstitialViewCB = callbackContext;
-				
-				return true;
-			}
+			bannerViewCB = callbackContext;
+			
+			return true;
 		}
-		catch (JSONException e) {
+		else if (action.equals("reloadBannerAd")) {
+			//Activity activity=cordova.getActivity();
+			//webView
+			
+			final CallbackContext delayedCB = callbackContext;
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {
+					_reloadBannerAd();
+
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					pr.setKeepCallback(true);
+					delayedCB.sendPluginResult(pr);					
+				}
+			});
+			
+			bannerViewCB = callbackContext;
+			
+			return true;
+		}			
+		else if (action.equals("showBannerAd")) {
+			//Activity activity=cordova.getActivity();
+			//webView
+			//
+			final String position = args.getString(0);
+			Log.d(LOG_TAG, position);
+			final String size = args.getString(1);
+			Log.d(LOG_TAG, size);
+			
+			final CallbackContext delayedCB = callbackContext;
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {						
+					_showBannerAd(position, size);
+
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					pr.setKeepCallback(true);
+					delayedCB.sendPluginResult(pr);					
+				}
+			});				
+
+			bannerViewCB = callbackContext;
+			
+			return true;
+		}
+		else if (action.equals("hideBannerAd")) {
+			//Activity activity=cordova.getActivity();
+			//webView
+			//
+			
+			final CallbackContext delayedCB = callbackContext;
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {		            			            	
+					_hideBannerAd();
+
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					pr.setKeepCallback(true);
+					delayedCB.sendPluginResult(pr);					
+				}
+			});
+			
+			bannerViewCB = callbackContext;
+			
+			return true;
+		}
+		else if (action.equals("preloadFullScreenAd")) {
+			//Activity activity=cordova.getActivity();
+			//webView
+			//
+
+			fullScreenAdPreloaded = true;
+
+			final CallbackContext delayedCB = callbackContext;
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {
+					_preloadFullScreenAd();
+
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					pr.setKeepCallback(true);
+					delayedCB.sendPluginResult(pr);							
+				}
+			});
+
+			interstitialViewCB = callbackContext;
+			
+			return true;
+		}
+		else if (action.equals("reloadFullScreenAd")) {
+			//Activity activity=cordova.getActivity();
+			//webView
+			//
+
+			fullScreenAdPreloaded = true;				
+			
+			final CallbackContext delayedCB = callbackContext;
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {
+					_reloadFullScreenAd();
+
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					pr.setKeepCallback(true);
+					delayedCB.sendPluginResult(pr);	
+				}
+			});
+
+			interstitialViewCB = callbackContext;
+			
+			return true;
+		}			
+		else if (action.equals("showFullScreenAd")) {
+			//Activity activity=cordova.getActivity();
+			//webView
+			//
+			
+			final CallbackContext delayedCB = callbackContext;
+			cordova.getActivity().runOnUiThread(new Runnable(){
+				@Override
+				public void run() {
+					_showFullScreenAd();
+
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
+					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					pr.setKeepCallback(true);
+					delayedCB.sendPluginResult(pr);							
+				}
+			});
+
+			interstitialViewCB = callbackContext;
+			
+			return true;
 		}
 		
-		callbackContext.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-		
-		return false;		
+		return false; // Returning false results in a "MethodNotFound" error.
 	}
 	//-------------------------------------
 	private void _setUp(String adUnit, String adUnitFullScreen, boolean isOverlap, boolean isTest){
@@ -405,7 +430,7 @@ public class Admob extends CordovaPlugin {
 			//
 			bannerView = new AdView(cordova.getActivity());//			
 			bannerView.setAdUnitId(this.adUnit);
-			bannerView.setAdListener(new MyBannerViewListener(bannerView));
+			bannerView.setAdListener(new MyBannerViewListener(bannerView, this));
 			
 			//https://developers.google.com/mobile-ads-sdk/docs/admob/android/banner
 			if(size == null) {
@@ -505,7 +530,7 @@ public class Admob extends CordovaPlugin {
 		//http://stackoverflow.com/questions/24900725/admob-banner-poitioning-in-android-on-bottom-of-the-screen-using-no-xml-relative
 		RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(AdView.LayoutParams.WRAP_CONTENT, AdView.LayoutParams.WRAP_CONTENT);
 		if (position.equals("top-left")) {
-			Log.d("Admob", "top-left");		
+			Log.d(LOG_TAG, "top-left");		
 			params.addRule(RelativeLayout.ALIGN_PARENT_TOP);
 			params.addRule(RelativeLayout.ALIGN_PARENT_LEFT);		
 		}
@@ -651,30 +676,42 @@ public class Admob extends CordovaPlugin {
     }
 }
 
+//http://developer.android.com/reference/com/google/android/gms/ads/AdListener.html
 class MyBannerViewListener extends AdListener {
+	private static final String LOG_TAG = "MyBannerViewListener";
+	//
 	AdView bannerView;
-
-	MyBannerViewListener (AdView bannerView){
+	//
+	Admob admob;
+	
+	MyBannerViewListener (AdView bannerView, Admob admob){
 		this.bannerView = bannerView;
+		this.admob = admob;			
 	}	
 	public void onAdLoaded() {
-		Log.d("Admob", "onAdLoaded");
+		Log.d(LOG_TAG, "onAdLoaded");
+		
+		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onBannerAdLoaded");
+		pr.setKeepCallback(true);
+		admob.bannerViewCB.sendPluginResult(pr);			
 	}
 	public void onAdFailedToLoad(int errorCode) {
-		Log.d("Admob", "onAdFailedToLoad");
+		Log.d(LOG_TAG, "onAdFailedToLoad");
 	}
 	public void onAdOpened() {
-		Log.d("Admob", "onAdOpened");
+		Log.d(LOG_TAG, "onAdOpened");//overlay screen opened
 	}
 	public void onAdClosed() {
-		Log.d("Admob", "onAdClosed");
+		Log.d(LOG_TAG, "onAdClosed");
 	}
 	public void onAdLeftApplication() {
-		Log.d("Admob", "onAdLeftApplication");
+		Log.d(LOG_TAG, "onAdLeftApplication");
 	}
 }
 
 class MyInterstitialViewListener extends AdListener {
+	private static final String LOG_TAG = "MyInterstitialViewListener";
+	//
 	InterstitialAd interstitialView;
 	//
 	Admob admob;
@@ -684,8 +721,8 @@ class MyInterstitialViewListener extends AdListener {
 		this.admob = admob;		
 	}	
 	public void onAdLoaded() {
-		Log.d("Admob", "onAdLoaded");
-
+		Log.d(LOG_TAG, "onAdLoaded");
+		
 		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdLoaded");
 		pr.setKeepCallback(true);
 		admob.interstitialViewCB.sendPluginResult(pr);	
@@ -697,21 +734,23 @@ class MyInterstitialViewListener extends AdListener {
 		}
 	}
 	public void onAdFailedToLoad(int errorCode) {
-		Log.d("Admob", "onAdFailedToLoad");
+		Log.d(LOG_TAG, "onAdFailedToLoad");
+	}
+	public void onAdLeftApplication() {
+		Log.d(LOG_TAG, "onAdLeftApplication");
 	}
 	public void onAdOpened() {
-		Log.d("Admob", "onAdOpened");
+		Log.d(LOG_TAG, "onAdOpened");
+		
 		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdShown");
 		pr.setKeepCallback(true);
 		admob.interstitialViewCB.sendPluginResult(pr);		
 	}
 	public void onAdClosed() {
-		Log.d("Admob", "onAdClosed");
+		Log.d(LOG_TAG, "onAdClosed");
+		
 		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdClosed");
 		pr.setKeepCallback(true);
 		admob.interstitialViewCB.sendPluginResult(pr);		
-	}
-	public void onAdLeftApplication() {
-		Log.d("Admob", "onAdLeftApplication");
 	}
 }

@@ -11,8 +11,13 @@ module.exports = {
         ); 
     },
 	preloadBannerAd: function(successCallback, errorCallback) {
+		var self = this;	
         cordova.exec(
-            successCallback,
+            function (result) {
+				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+					self.onBannerAdLoaded();
+				}
+			},
             errorCallback,
             'Admob',
             'preloadBannerAd',
@@ -20,8 +25,13 @@ module.exports = {
         ); 
     },
 	reloadBannerAd: function(successCallback, errorCallback) {
+		var self = this;	
         cordova.exec(
-            successCallback,
+            function (result) {
+				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+					self.onBannerAdLoaded();
+				}
+			},
             errorCallback,
             'Admob',
             'reloadBannerAd',
@@ -29,8 +39,13 @@ module.exports = {
         ); 
     },
     showBannerAd: function(position, size, successCallback, errorCallback) {
+		var self = this;	
         cordova.exec(
-            successCallback,
+            function (result) {
+				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+					self.onBannerAdLoaded();
+				}
+			},
             errorCallback,
             'Admob',
             'showBannerAd',
@@ -38,8 +53,13 @@ module.exports = {
         ); 
     },
     hideBannerAd: function(successCallback, errorCallback) {
+		var self = this;	
         cordova.exec(
-            successCallback,
+            function (result) {
+				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+					self.onBannerAdLoaded();
+				}
+			},
             errorCallback,
             'Admob',
             'hideBannerAd',
@@ -107,6 +127,7 @@ module.exports = {
             []
         ); 
     },
+	onBannerAdLoaded: null,
 	onFullScreenAdLoaded: null,
 	onFullScreenAdShown: null,
 	onFullScreenAdClosed: null

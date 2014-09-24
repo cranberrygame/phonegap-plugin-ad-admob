@@ -14,6 +14,8 @@ Change Log:
 	supports SMART_BANNER resize when orientation changes on android.
 2014.9.20
 	supports isOverlap on android, ios, wp8
+2014.9.24
+	supports banner ad callbacks (onBannerAdLoaded)
 </pre>
 To-Do:
 <pre>
@@ -31,9 +33,34 @@ var adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
 var isOverlap = true; //true: overlap, false: split
 var isTest = true;
 
+/*
+var adUnit;
+var adUnitFullScreen;
+//android
+if (navigator.userAgent.match(/Android/i)) {
+	adUnit = "REPLACE_THIS_WITH_YOUR_ANDROID_AD_UNIT";
+	adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_ANDROID_AD_UNIT";
+}
+//ios
+else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
+	adUnit = "REPLACE_THIS_WITH_YOUR_IOS_AD_UNIT";
+	adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_IOS_AD_UNIT";
+}
+//wp8
+else if( navigator.userAgent.match(/Windows Phone/i) ) {
+	adUnit = "REPLACE_THIS_WITH_YOUR_WP8_AD_UNIT";
+	adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_WP8_AD_UNIT";
+}
+*/
+
 document.addEventListener("deviceready", function(){
 	window.admob.setUp(adUnit, adUnitFullScreen, isOverlap, isTest);
-		
+
+	//banner ad callback
+	window.admob.onBannerAdLoaded = function() {
+		alert('onBannerAdLoaded');
+	};
+	//full screen ad callback
 	window.admob.onFullScreenAdLoaded = function() {
 		alert('onFullScreenAdLoaded');
 	};
