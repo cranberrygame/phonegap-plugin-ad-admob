@@ -16,7 +16,7 @@ XDK PORJECTS - your_xdk_project - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGI
 
 Name: admob
 Plugin ID: com.cranberrygame.phonegap.plugin.ad.admob
-Repo URL: https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob
+[v] Plugin is located in the Apache Cordova Plugins Registry
 </pre>
 
 Change Log:
