@@ -136,7 +136,7 @@ How to test:
 
 Download construct2 plugin:
 
-<a href="https://www.scirra.com/forum/viewtopic.php?t=109586">Phonegap related plugins (+Crosswalk)</a>
+<a href="https://www.scirra.com/">Scirra</a>
 
 Support:
 
