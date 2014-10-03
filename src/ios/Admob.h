@@ -1,8 +1,7 @@
-// Copyright (c) 2014 cranberrygame
-// Email: cranberrygame@yahoo.com
-// Phonegap plugin: http://www.github.com/cranberrygame
-// Construct2 phonegap plugin: https://www.scirra.com/forum/viewtopic.php?f=153&t=109586
-// License: MIT (http://opensource.org/licenses/MIT)
+//Copyright (c) 2014 Sang Ki Kwon (Cranberrygame)
+//Email: cranberrygame@yahoo.com
+//Homepage: http://www.github.com/cranberrygame
+//License: MIT (http://opensource.org/licenses/MIT)
 #import <Foundation/Foundation.h>
 #import <Cordova/CDV.h>
 //
@@ -19,10 +18,11 @@
 //
 @property GADBannerView *bannerView;
 @property GADInterstitial *interstitialView;
+@property NSString *bannerViewCallbackId;
 @property NSString *interstitialViewCallbackId;
 //
-@property BOOL bannerAdPreloaded;	
-@property BOOL fullScreenAdPreloaded;	
+@property BOOL bannerAdPreload;	
+@property BOOL fullScreenAdPreload;	
 @property NSString *position;
 @property NSString *size;
 @property NSInteger lastOrientation;

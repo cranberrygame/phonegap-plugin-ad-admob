@@ -2,7 +2,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.cranberrygame.phonegap.plugin.ad.admob"
-    version="1.0.19">
+    version="1.0.23">
 	
     <name>Phonegap admob plugin</name>
     <description>Phonegap admob plugin</description>
@@ -16,6 +16,11 @@
 	
     <!-- android -->
     <platform name="android">
+<!--
+		<dependency id="com.google.playservices" url="https://github.com/MobileChromeApps/google-play-services" commit="5d784fb083027fd2c1ef1545d8a2b0d595e4ec69" />
+-->		
+		<dependency id="com.google.playservices" version="17.0.0" />
+		
 	    <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Admob" >
                 <param name="android-package" value="com.cranberrygame.phonegap.plugin.ad.Admob"/>
@@ -30,15 +35,19 @@
 			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
         </config-file>		
 		<!-- cranberrygame start: google-play-services.jar -->
+<!--		
 		<config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
 		</config-file>
+-->		
 		<!-- cranberrygame end -->
 	
         <source-file src="src/android/Admob.java" target-dir="src/com/cranberrygame/phonegap/plugin/ad" />		
 		<!-- cranberrygame start: google-play-services.jar -->
+<!--		
 		<source-file src="src/android/google-play-services.jar" target-dir="libs" />
 		<source-file src="src/android/version.xml" target-dir="res/values" />
+-->		
 		<!-- cranberrygame end -->
     </platform>
 

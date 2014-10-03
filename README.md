@@ -1,9 +1,26 @@
+Prerequisite:
+
+<pre>
+</pre>
 
 How to Install:
 
+<pre>
 cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
+</pre>
+
+How to install (Crosswalk for android):
+
+<pre>
+XDK PORJECTS - your_xdk_project - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGINS AND PERMISSIONS - Third Party Plugins - Add a Third Party Plugin - Get Plugin from the Web -
+
+Name: admob
+Plugin ID: com.cranberrygame.phonegap.plugin.ad.admob
+Repo URL: https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob
+</pre>
 
 Change Log:
+
 <pre>
 2014.9.17
 	supports SKYSCRAPER size (120x600, Tablets, ipad only)
@@ -15,9 +32,15 @@ Change Log:
 2014.9.20
 	supports isOverlap on android, ios, wp8
 2014.9.24
-	supports banner ad callbacks (onBannerAdLoaded)
+	supports banner ad callback (onBannerAdLoaded)
+	supports full screen ad callback (onFullScreenAdLoaded)
+2014.10.3
+	supports banner ad callback (onBannerAdPreloaded)
+	supports full screen ad callback (onFullScreenAdPreloaded)
 </pre>
+
 To-Do:
+
 <pre>
 	supports other position: 'top-left', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom-right' on ios.
 	supports banner reposition when orientation changes on ios.
@@ -25,6 +48,7 @@ To-Do:
 	supports ios split mode
 	supports wp8 split mode
 </pre>	
+
 How to Use:
 
 <pre>
@@ -57,18 +81,24 @@ document.addEventListener("deviceready", function(){
 	window.admob.setUp(adUnit, adUnitFullScreen, isOverlap, isTest);
 
 	//banner ad callback
+	window.admob.onBannerAdPreloaded = function() {
+		alert('onBannerAdPreloaded');
+	};
 	window.admob.onBannerAdLoaded = function() {
 		alert('onBannerAdLoaded');
 	};
 	//full screen ad callback
+	window.admob.onFullScreenAdPreloaded = function() {
+		alert('onFullScreenAdPreloaded');
+	};
 	window.admob.onFullScreenAdLoaded = function() {
 		alert('onFullScreenAdLoaded');
 	};
 	window.admob.onFullScreenAdShown = function() {
 		alert('onFullScreenAdShown');
 	};
-	window.admob.onFullScreenAdClosed = function() {
-		alert('onFullScreenAdClosed');
+	window.admob.onFullScreenAdHidden = function() {
+		alert('onFullScreenAdHidden');
 	};
 }, false);
 
@@ -97,7 +127,16 @@ window.admob.reloadFullScreenAd();
 Example:
 
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/basic/index.html">example/basic/index.html</a>
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/banner_position_size/index.html">example/banner_position_size/index.html</a>
+<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/advanced/index.html">example/advanced/index.html</a>
+
+How to test:
+
+<pre>
+</pre>
+
+Download construct2 plugin:
+
+<a href="https://www.scirra.com/forum/viewtopic.php?t=109586">Phonegap related plugins (+Crosswalk)</a>
 
 Support:
 

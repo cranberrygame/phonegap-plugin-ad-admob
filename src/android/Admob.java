@@ -1,8 +1,7 @@
-// Copyright (c) 2014 cranberrygame
-// Email: cranberrygame@yahoo.com
-// Phonegap plugin: http://www.github.com/cranberrygame
-// Construct2 phonegap plugin: https://www.scirra.com/forum/viewtopic.php?f=153&t=109586
-// License: MIT (http://opensource.org/licenses/MIT)
+//Copyright (c) 2014 Sang Ki Kwon (Cranberrygame)
+//Email: cranberrygame@yahoo.com
+//Homepage: http://www.github.com/cranberrygame
+//License: MIT (http://opensource.org/licenses/MIT)
 package com.cranberrygame.phonegap.plugin.ad;
 
 import org.apache.cordova.CordovaPlugin;
@@ -37,6 +36,7 @@ import android.view.Surface;
 
 class Util {
 
+	//ex) Util.alert(cordova.getActivity(),"message");
 	public static void alert(Activity activity, String message) {
 		AlertDialog ad = new AlertDialog.Builder(activity).create();  
 		ad.setCancelable(false); // This blocks the 'BACK' button  
@@ -94,11 +94,11 @@ public class Admob extends CordovaPlugin {
 	private AdView bannerView; 
 	private RelativeLayout bannerViewLayout;
     private InterstitialAd interstitialView;
-	public CallbackContext bannerViewCB;
-	public CallbackContext interstitialViewCB;
+	public CallbackContext bannerViewCC;
+	public CallbackContext interstitialViewCC;
 	//
-	public boolean bannerAdPreloaded;	
-	public boolean fullScreenAdPreloaded;
+	public boolean bannerAdPreload;	
+	public boolean fullScreenAdPreload;
     private String position;	
     private String size;
     private int lastOrientation;
@@ -198,8 +198,8 @@ public class Admob extends CordovaPlugin {
 		//args.length()
 		//args.getString(0)
 		//args.getString(1)
-		//args.Int(0)
-		//args.Int(1)
+		//args.getInt(0)
+		//args.getInt(1)
 		//args.getBoolean(0)
 		//args.getBoolean(1)
 		//JSONObject json = args.optJSONObject(0);
@@ -220,14 +220,18 @@ public class Admob extends CordovaPlugin {
 			final boolean isTest = args.getBoolean(3);				
 			Log.d(LOG_TAG, isTest?"true":"false");
 			
-			final CallbackContext delayedCB = callbackContext;		
+			final CallbackContext delayedCC = callbackContext;		
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {						
 					_setUp(adUnit, adUnitFullScreen, isOverlap, isTest);
 
-					delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					//pr.setKeepCallback(true);
+					delayedCC.sendPluginResult(pr);
+					//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+					//pr.setKeepCallback(true);
+					//delayedCC.sendPluginResult(pr);					
 				}
 			});
 
@@ -237,24 +241,17 @@ public class Admob extends CordovaPlugin {
 			//Activity activity=cordova.getActivity();
 			//webView
 
-			bannerAdPreloaded = true;
+			bannerAdPreload = true;
 			
-			final CallbackContext delayedCB = callbackContext;		
+			final CallbackContext delayedCC = callbackContext;		
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {						
-					_preloadBannerAd();
-
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-					
-					PluginResult pr = new PluginResult(PluginResult.Status.OK);
-					pr.setKeepCallback(true);
-					delayedCB.sendPluginResult(pr);					
+					_preloadBannerAd();				
 				}
 			});
 
-			bannerViewCB = callbackContext;
+			bannerViewCC = callbackContext;
 			
 			return true;
 		}
@@ -262,22 +259,15 @@ public class Admob extends CordovaPlugin {
 			//Activity activity=cordova.getActivity();
 			//webView
 			
-			final CallbackContext delayedCB = callbackContext;
+			final CallbackContext delayedCC = callbackContext;
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {
 					_reloadBannerAd();
-
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-					
-					PluginResult pr = new PluginResult(PluginResult.Status.OK);
-					pr.setKeepCallback(true);
-					delayedCB.sendPluginResult(pr);					
 				}
 			});
 			
-			bannerViewCB = callbackContext;
+			bannerViewCC = callbackContext;
 			
 			return true;
 		}			
@@ -290,22 +280,15 @@ public class Admob extends CordovaPlugin {
 			final String size = args.getString(1);
 			Log.d(LOG_TAG, size);
 			
-			final CallbackContext delayedCB = callbackContext;
+			final CallbackContext delayedCC = callbackContext;
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {						
 					_showBannerAd(position, size);
-
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-					
-					PluginResult pr = new PluginResult(PluginResult.Status.OK);
-					pr.setKeepCallback(true);
-					delayedCB.sendPluginResult(pr);					
 				}
 			});				
 
-			bannerViewCB = callbackContext;
+			bannerViewCC = callbackContext;
 			
 			return true;
 		}
@@ -314,22 +297,15 @@ public class Admob extends CordovaPlugin {
 			//webView
 			//
 			
-			final CallbackContext delayedCB = callbackContext;
+			final CallbackContext delayedCC = callbackContext;
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {		            			            	
 					_hideBannerAd();
-
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-					
-					PluginResult pr = new PluginResult(PluginResult.Status.OK);
-					pr.setKeepCallback(true);
-					delayedCB.sendPluginResult(pr);					
 				}
 			});
 			
-			bannerViewCB = callbackContext;
+			bannerViewCC = callbackContext;
 			
 			return true;
 		}
@@ -338,24 +314,17 @@ public class Admob extends CordovaPlugin {
 			//webView
 			//
 
-			fullScreenAdPreloaded = true;
+			fullScreenAdPreload = true;
 
-			final CallbackContext delayedCB = callbackContext;
+			final CallbackContext delayedCC = callbackContext;
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {
 					_preloadFullScreenAd();
-
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-					
-					PluginResult pr = new PluginResult(PluginResult.Status.OK);
-					pr.setKeepCallback(true);
-					delayedCB.sendPluginResult(pr);							
 				}
 			});
 
-			interstitialViewCB = callbackContext;
+			interstitialViewCC = callbackContext;
 			
 			return true;
 		}
@@ -364,24 +333,17 @@ public class Admob extends CordovaPlugin {
 			//webView
 			//
 
-			fullScreenAdPreloaded = true;				
+			fullScreenAdPreload = true;			
 			
-			final CallbackContext delayedCB = callbackContext;
+			final CallbackContext delayedCC = callbackContext;
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {
 					_reloadFullScreenAd();
-
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-					
-					PluginResult pr = new PluginResult(PluginResult.Status.OK);
-					pr.setKeepCallback(true);
-					delayedCB.sendPluginResult(pr);	
 				}
 			});
 
-			interstitialViewCB = callbackContext;
+			interstitialViewCC = callbackContext;
 			
 			return true;
 		}			
@@ -390,22 +352,15 @@ public class Admob extends CordovaPlugin {
 			//webView
 			//
 			
-			final CallbackContext delayedCB = callbackContext;
+			final CallbackContext delayedCC = callbackContext;
 			cordova.getActivity().runOnUiThread(new Runnable(){
 				@Override
 				public void run() {
 					_showFullScreenAd();
-
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.OK));				
-					//delayedCB.sendPluginResult(new PluginResult(PluginResult.Status.ERROR));
-
-					PluginResult pr = new PluginResult(PluginResult.Status.OK);
-					pr.setKeepCallback(true);
-					delayedCB.sendPluginResult(pr);							
 				}
 			});
 
-			interstitialViewCB = callbackContext;
+			interstitialViewCC = callbackContext;
 			
 			return true;
 		}
@@ -512,8 +467,8 @@ public class Admob extends CordovaPlugin {
 		this.position = position;	
 		this.size = size;
 
-		if(bannerAdPreloaded) {
-			bannerAdPreloaded = false;
+		if(bannerAdPreload) {
+			bannerAdPreload = false;
 		}
 		else{
 			_preloadBannerAd();
@@ -643,10 +598,10 @@ public class Admob extends CordovaPlugin {
 		}
 	}	
 	private void _showFullScreenAd(){
-		if(fullScreenAdPreloaded) {
+		if(fullScreenAdPreload) {
 			interstitialView.show();
 			
-			fullScreenAdPreloaded = false;
+			fullScreenAdPreload = false;
 		}
 		else{
 			_preloadFullScreenAd();
@@ -690,10 +645,22 @@ class MyBannerViewListener extends AdListener {
 	}	
 	public void onAdLoaded() {
 		Log.d(LOG_TAG, "onAdLoaded");
+
+		if (admob.bannerAdPreload) {
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onBannerAdPreloaded");
+			pr.setKeepCallback(true);
+			admob.bannerViewCC.sendPluginResult(pr);
+			//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+			//pr.setKeepCallback(true);
+			//admob.bannerViewCC.sendPluginResult(pr);
+		}
 		
 		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onBannerAdLoaded");
-		pr.setKeepCallback(true);
-		admob.bannerViewCB.sendPluginResult(pr);			
+		//pr.setKeepCallback(true);
+		admob.bannerViewCC.sendPluginResult(pr);
+		//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+		//pr.setKeepCallback(true);
+		//admob.bannerViewCC.sendPluginResult(pr);
 	}
 	public void onAdFailedToLoad(int errorCode) {
 		Log.d(LOG_TAG, "onAdFailedToLoad");
@@ -723,15 +690,25 @@ class MyInterstitialViewListener extends AdListener {
 	public void onAdLoaded() {
 		Log.d(LOG_TAG, "onAdLoaded");
 		
+		if(admob.fullScreenAdPreload) {
+			PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdPreloaded");
+			pr.setKeepCallback(true);
+			admob.interstitialViewCC.sendPluginResult(pr);
+			//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+			//pr.setKeepCallback(true);
+			//admob.interstitialViewCC.sendPluginResult(pr);
+		}
+		
 		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdLoaded");
 		pr.setKeepCallback(true);
-		admob.interstitialViewCB.sendPluginResult(pr);	
-			
-		if(admob.fullScreenAdPreloaded) {		
-		}
-		else {
+		admob.interstitialViewCC.sendPluginResult(pr);
+		//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+		//pr.setKeepCallback(true);
+		//admob.interstitialViewCC.sendPluginResult(pr);		
+		
+		if(!admob.fullScreenAdPreload) {
 			interstitialView.show();
-		}
+		}	
 	}
 	public void onAdFailedToLoad(int errorCode) {
 		Log.d(LOG_TAG, "onAdFailedToLoad");
@@ -744,13 +721,20 @@ class MyInterstitialViewListener extends AdListener {
 		
 		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdShown");
 		pr.setKeepCallback(true);
-		admob.interstitialViewCB.sendPluginResult(pr);		
+		admob.interstitialViewCC.sendPluginResult(pr);
+		//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+		//pr.setKeepCallback(true);
+		//admob.interstitialViewCC.sendPluginResult(pr);		
 	}
 	public void onAdClosed() {
 		Log.d(LOG_TAG, "onAdClosed");
+
+		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdHidden");
+		//pr.setKeepCallback(true);
+		admob.interstitialViewCC.sendPluginResult(pr);
+		//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+		//pr.setKeepCallback(true);
+		//admob.interstitialViewCC.sendPluginResult(pr);		
 		
-		PluginResult pr = new PluginResult(PluginResult.Status.OK, "onFullScreenAdClosed");
-		pr.setKeepCallback(true);
-		admob.interstitialViewCB.sendPluginResult(pr);		
 	}
 }

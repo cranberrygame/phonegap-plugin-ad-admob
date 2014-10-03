@@ -1,8 +1,7 @@
-// Copyright (c) 2014 cranberrygame
-// Email: cranberrygame@yahoo.com
-// Phonegap plugin: http://www.github.com/cranberrygame
-// Construct2 phonegap plugin: https://www.scirra.com/forum/viewtopic.php?f=153&t=109586
-// License: MIT (http://opensource.org/licenses/MIT)
+//Copyright (c) 2014 Sang Ki Kwon (Cranberrygame)
+//Email: cranberrygame@yahoo.com
+//Homepage: http://www.github.com/cranberrygame
+//License: MIT (http://opensource.org/licenses/MIT)
 #import "Admob.h"
 //
 #import "GADAdMobExtras.h"
@@ -23,8 +22,8 @@
 @synthesize bannerViewCallbackId;
 @synthesize interstitialViewCallbackId;
 //
-@synthesize bannerAdPreloaded;	
-@synthesize fullScreenAdPreloaded;	
+@synthesize bannerAdPreload;	
+@synthesize fullScreenAdPreload;	
 @synthesize position;
 @synthesize size;
 @synthesize lastOrientation;
@@ -81,24 +80,20 @@
 
 	[self _setUp:adUnit anAdUnitFullScreen:adUnitFullScreen aIsOverlap:isOverlap aIsTest:isTest];
 
-    
-	[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+	//[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];	
 }
 
 - (void)preloadBannerAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
 
-	self.bannerAdPreloaded = YES;
+	self.bannerAdPreload = YES;
 	
 	[self _preloadBannerAd];
-    
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
-	
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
 
     self.bannerViewCallbackId = command.callbackId;
 }
@@ -107,13 +102,6 @@
     //self.viewController
 
 	[self _reloadBannerAd];
-
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
-	
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
 
     self.bannerViewCallbackId = command.callbackId;
 }
@@ -128,13 +116,6 @@
 
 	[self _showBannerAd:position aSize:size];
 
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
-	
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
-
     self.bannerViewCallbackId = command.callbackId;
 }
 
@@ -143,28 +124,14 @@
 
 	[self _hideBannerAd];
 
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
-	
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
-
     self.bannerViewCallbackId = command.callbackId;
 }
 - (void)preloadFullScreenAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
 
-	self.fullScreenAdPreloaded = YES;	
+	self.fullScreenAdPreload = YES;	
 	
 	[self _preloadFullScreenAd];
-
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
-	
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
 
     self.interstitialViewCallbackId = command.callbackId;	
 }
@@ -172,16 +139,9 @@
 - (void)reloadFullScreenAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
 
-	self.fullScreenAdPreloaded = YES;	
+	self.fullScreenAdPreload = YES;	
 	
 	[self _reloadFullScreenAd];
-
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
-	
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
 	
     self.interstitialViewCallbackId = command.callbackId;	
 }
@@ -190,13 +150,6 @@
     //self.viewController
 	
 	[self _showFullScreenAd];
-
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
-	//[self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR] callbackId:command.callbackId];
-	
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
     
     self.interstitialViewCallbackId = command.callbackId;
 }
@@ -303,8 +256,8 @@
 	self.position = position;
 	self.size = size;
 
-	if(bannerAdPreloaded) {
-		bannerAdPreloaded = NO;
+	if(bannerAdPreload) {
+		bannerAdPreload = NO;
 	}
 	else{
 		[self _preloadBannerAd];
@@ -454,10 +407,10 @@
 }
 - (void) _showFullScreenAd
 {
-	if(fullScreenAdPreloaded) {
+	if(fullScreenAdPreload) {
 		[self.interstitialView presentFromRootViewController:self.viewController];
 		
-		fullScreenAdPreloaded = NO;
+		fullScreenAdPreload = NO;
 	}
 	else{
 		[self _preloadFullScreenAd];
@@ -467,12 +420,30 @@
 //GADBannerViewDelegate
 - (void)adViewDidReceiveAd:(GADBannerView *)view {
 	NSLog(@"adViewDidReceiveAd");
+
+	if(bannerAdPreload) {
+		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+		[dict setObject:@"onBannerAdPreloaded" forKey:@"result"];
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+		[pr setKeepCallbackAsBool:YES];
+		[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];
+		//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+		//[dict setObject:@"onBannerAdPreloaded" forKey:@"result"];
+		//pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+		//[pr setKeepCallbackAsBool:YES];
+		//[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];		
+	}
 	
 	NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
 	[dict setObject:@"onBannerAdLoaded" forKey:@"result"];
 	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];	
+	//[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];
+	//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+	//[dict setObject:@"onBannerAdLoaded" forKey:@"result"];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];	
 	
 	bannerView.hidden = NO;
 }
@@ -496,15 +467,31 @@
 - (void)interstitialDidReceiveAd:(GADInterstitial *)ad {
 	NSLog(@"interstitialDidReceiveAd");
 	
+	if(fullScreenAdPreload) {
+		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+		[dict setObject:@"onFullScreenAdPreloaded" forKey:@"result"];
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+		[pr setKeepCallbackAsBool:YES];
+		[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
+		//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+		//[dict setObject:@"onFullScreenAdPreloaded" forKey:@"result"];
+		//pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+		//[pr setKeepCallbackAsBool:YES];
+		//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];			
+	}
+	
 	NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
 	[dict setObject:@"onFullScreenAdLoaded" forKey:@"result"];
 	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
 	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];	
-
-	if(fullScreenAdPreloaded) {
-	}
-	else {
+	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
+	//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+	//[dict setObject:@"onFullScreenAdLoaded" forKey:@"result"];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];		
+	
+	if(!fullScreenAdPreload) {
 		[self.interstitialView presentFromRootViewController:self.viewController];
 	}
 }
@@ -521,7 +508,12 @@
     [dict setObject:@"onFullScreenAdShown" forKey:@"result"];
     CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
 	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];	
+	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
+    //NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+    //[dict setObject:@"onFullScreenAdShown" forKey:@"result"];
+    //CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];		
 }
 - (void)interstitialWillDismissScreen:(GADInterstitial *)ad {
 	NSLog(@"interstitialWillDismissScreen");
@@ -530,10 +522,15 @@
 	NSLog(@"interstitialDidDismissScreen");
 	
     NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-    [dict setObject:@"onFullScreenAdClosed" forKey:@"result"];
+    [dict setObject:@"onFullScreenAdHidden" forKey:@"result"];
     CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
-	[pr setKeepCallbackAsBool:YES];
-	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
+	//[pr setKeepCallbackAsBool:YES];
+	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];	
+    //NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
+    //[dict setObject:@"onFullScreenAdHidden" forKey:@"result"];
+    //CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+	//[pr setKeepCallbackAsBool:YES];
+	//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];	
 }
 
 - (void)dealloc {

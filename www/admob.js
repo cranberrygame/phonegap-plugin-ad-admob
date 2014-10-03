@@ -14,7 +14,10 @@ module.exports = {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
+					self.onBannerAdPreloaded();
+				}
+				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
 					self.onBannerAdLoaded();
 				}
 			},
@@ -28,7 +31,10 @@ module.exports = {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
+					self.onBannerAdPreloaded();
+				}
+				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
 					self.onBannerAdLoaded();
 				}
 			},
@@ -42,7 +48,10 @@ module.exports = {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
+					self.onBannerAdPreloaded();
+				}
+				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
 					self.onBannerAdLoaded();
 				}
 			},
@@ -56,7 +65,10 @@ module.exports = {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
+				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
+					self.onBannerAdPreloaded();
+				}
+				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
 					self.onBannerAdLoaded();
 				}
 			},
@@ -71,14 +83,20 @@ module.exports = {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
+				if (result == "onFullScreenAdPreloaded" || result['result'] == "onFullScreenAdPreloaded" ) {
+					self.onFullScreenAdPreloaded();
+				}
+				else if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
 					self.onFullScreenAdLoaded();
 				}
 				else if (result == "onFullScreenAdShown" || result['result'] == "onFullScreenAdShown" ) {
 					self.onFullScreenAdShown();
 				}
-				else if (result == "onFullScreenAdClosed" || result['result'] == "onFullScreenAdClosed" ) {
-					self.onFullScreenAdClosed();
+				else if (result == "onFullScreenAdHidden" || result['result'] == "onFullScreenAdHidden" ) {
+					 if (self.onFullScreenAdClosed)
+						self.onFullScreenAdClosed(); //deprecated
+					 if (self.onFullScreenAdHidden)
+						self.onFullScreenAdHidden();
 				}
 			},
             errorCallback,
@@ -91,14 +109,20 @@ module.exports = {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
+				if (result == "onFullScreenAdPreloaded" || result['result'] == "onFullScreenAdPreloaded" ) {
+					self.onFullScreenAdPreloaded();
+				}
+				else if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
 					self.onFullScreenAdLoaded();
 				}
 				else if (result == "onFullScreenAdShown" || result['result'] == "onFullScreenAdShown" ) {
 					self.onFullScreenAdShown();
 				}
-				else if (result == "onFullScreenAdClosed" || result['result'] == "onFullScreenAdClosed" ) {
-					self.onFullScreenAdClosed();
+				else if (result == "onFullScreenAdHidden" || result['result'] == "onFullScreenAdHidden" ) {
+					 if (self.onFullScreenAdClosed)
+						self.onFullScreenAdClosed(); //deprecated
+					 if (self.onFullScreenAdHidden)
+						self.onFullScreenAdHidden();
 				}
 			},
             errorCallback,
@@ -111,14 +135,20 @@ module.exports = {
 		var self = this;
 		cordova.exec(
             function (result) {
-				if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
+				if (result == "onFullScreenAdPreloaded" || result['result'] == "onFullScreenAdPreloaded" ) {
+					self.onFullScreenAdPreloaded();
+				}
+				else if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
 					self.onFullScreenAdLoaded();
 				}
 				else if (result == "onFullScreenAdShown" || result['result'] == "onFullScreenAdShown" ) {
 					self.onFullScreenAdShown();
 				}
-				else if (result == "onFullScreenAdClosed" || result['result'] == "onFullScreenAdClosed" ) {
-					self.onFullScreenAdClosed();
+				else if (result == "onFullScreenAdHidden" || result['result'] == "onFullScreenAdHidden" ) {
+					 if (self.onFullScreenAdClosed)
+						self.onFullScreenAdClosed(); //deprecated
+					 if (self.onFullScreenAdHidden)
+						self.onFullScreenAdHidden();
 				}
 			},
             errorCallback,
@@ -127,8 +157,11 @@ module.exports = {
             []
         ); 
     },
+	onBannerAdPreloaded: null,
 	onBannerAdLoaded: null,
+	onFullScreenAdPreloaded: null,
 	onFullScreenAdLoaded: null,
 	onFullScreenAdShown: null,
-	onFullScreenAdClosed: null
+	onFullScreenAdClosed: null, //deprecated
+	onFullScreenAdHidden: null
 };
