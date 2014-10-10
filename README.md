@@ -58,8 +58,8 @@ var isOverlap = true; //true: overlap, false: split
 var isTest = true;
 
 /*
-var adUnit = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
-var adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
+var adUnit;
+var adUnitFullScreen;
 var isOverlap = true; //true: overlap, false: split
 var isTest = true;
 //android
