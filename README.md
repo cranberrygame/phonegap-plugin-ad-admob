@@ -34,7 +34,7 @@ To-Do:
 ```
 # Install phonegap plugin #
 
-## Phonegap build service (config.xml) ##
+## Phonegap build service (construct2 automatically add this tag to config.xml) ##
 ```c
 not yet supported
 ```
