@@ -40,7 +40,7 @@ not yet supported
 ```
 ## Phonegap cli ##
 ```c
-cordova plugin add https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob
+cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
 ```
 ## Crosswalk ##
 ```c
