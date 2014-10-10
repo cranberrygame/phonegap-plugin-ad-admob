@@ -41,6 +41,22 @@ not yet supported
 ## Phonegap cli ##
 ```c
 cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
+
+cf)apple app store meta data
+
+xport Compliance
+	Have you added or made changes to encryption features since your last submission of this app? (No)
+
+Advertising Identifier
+	Does this app use the Advertising Identifier (IDFA)? (Yes)
+	
+	This app uses the Advertising Identifier to (select all that apply):
+		Serve advertisements within the app (check)
+	
+	Limit Ad Tracking setting in iOS (check)	
+	
+Previous Purchase Restrictions
+	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
 ```
 ## Crosswalk ##
 ```c
@@ -49,6 +65,22 @@ XDK PORJECTS - your_xdk_project - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGI
 Name: admob
 Plugin ID: com.cranberrygame.phonegap.plugin.ad.admob
 [v] Plugin is located in the Apache Cordova Plugins Registry
+
+cf)apple app store meta data
+
+xport Compliance
+	Have you added or made changes to encryption features since your last submission of this app? (No)
+
+Advertising Identifier
+	Does this app use the Advertising Identifier (IDFA)? (Yes)
+	
+	This app uses the Advertising Identifier to (select all that apply):
+		Serve advertisements within the app (check)
+	
+	Limit Ad Tracking setting in iOS (check)	
+	
+Previous Purchase Restrictions
+	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
 ```
 # API #
 ```javascript
