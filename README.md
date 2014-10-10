@@ -1,7 +1,7 @@
 # Overview #
 show admob banner and full screen ad
 
-[android, ios, wp8] [phonegap cli] [crosswalk for android]
+[android, ios, wp8] [phonegap cli] [crosswalk]
 
 requires admob account http://www.google.com/ads/admob/
 
