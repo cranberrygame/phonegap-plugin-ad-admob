@@ -1,157 +1,183 @@
 
 module.exports = {
 
-	setUp: function(adUnit, adUnitFullScreen, isOverlap, isTest, successCallback, errorCallback) {
+	setUp: function(adUnit, adUnitFullScreen, isOverlap, isTest) {
         cordova.exec(
-            successCallback,
-            errorCallback,
+            function (result) {
+			}, 
+			function (error) {
+			},
             'Admob',
             'setUp',			
             [adUnit, adUnitFullScreen, isOverlap, isTest]
         ); 
     },
-	preloadBannerAd: function(successCallback, errorCallback) {
+	preloadBannerAd: function() {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
-					self.onBannerAdPreloaded();
+				if (result == "onBannerAdPreloaded") {
+					if (self.onBannerAdPreloaded)
+						self.onBannerAdPreloaded();
 				}
-				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
-					self.onBannerAdLoaded();
+				else if (result == "onBannerAdLoaded") {
+					if (self.onBannerAdLoaded)
+						self.onBannerAdLoaded();
 				}
 			},
-            errorCallback,
+            function (error) {
+			},
             'Admob',
             'preloadBannerAd',
             []
         ); 
     },
-	reloadBannerAd: function(successCallback, errorCallback) {
+	reloadBannerAd: function() {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
-					self.onBannerAdPreloaded();
+				if (result == "onBannerAdPreloaded") {
+					if (self.onBannerAdPreloaded)
+						self.onBannerAdPreloaded();
 				}
-				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
-					self.onBannerAdLoaded();
+				else if (result == "onBannerAdLoaded") {
+					if (self.onBannerAdLoaded)
+						self.onBannerAdLoaded();
 				}
 			},
-            errorCallback,
+            function (error) {
+			},
             'Admob',
             'reloadBannerAd',
             []
         ); 
     },
-    showBannerAd: function(position, size, successCallback, errorCallback) {
+    showBannerAd: function(position, size) {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
-					self.onBannerAdPreloaded();
+				if (result == "onBannerAdPreloaded") {
+					if (self.onBannerAdPreloaded)
+						self.onBannerAdPreloaded();
 				}
-				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
-					self.onBannerAdLoaded();
+				else if (result == "onBannerAdLoaded") {
+					if (self.onBannerAdLoaded)
+						self.onBannerAdLoaded();
 				}
 			},
-            errorCallback,
+            function (error) {
+			},
             'Admob',
             'showBannerAd',
             [position, size]
         ); 
     },
-    hideBannerAd: function(successCallback, errorCallback) {
+    hideBannerAd: function() {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onBannerAdPreloaded" || result['result'] == "onBannerAdPreloaded" ) {
-					self.onBannerAdPreloaded();
+				if (result == "onBannerAdPreloaded") {
+					if (self.onBannerAdPreloaded)
+						self.onBannerAdPreloaded();
 				}
-				else if (result == "onBannerAdLoaded" || result['result'] == "onBannerAdLoaded" ) {
-					self.onBannerAdLoaded();
+				else if (result == "onBannerAdLoaded") {
+					if (self.onBannerAdLoaded)
+						self.onBannerAdLoaded();
 				}
 			},
-            errorCallback,
+            function (error) {
+			},
             'Admob',
             'hideBannerAd',
             []
         ); 
     },
 	//
-	preloadFullScreenAd: function(successCallback, errorCallback) {
+	preloadFullScreenAd: function() {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onFullScreenAdPreloaded" || result['result'] == "onFullScreenAdPreloaded" ) {
-					self.onFullScreenAdPreloaded();
+				if (result == "onFullScreenAdPreloaded") {
+					if (self.onFullScreenAdPreloaded)
+						self.onFullScreenAdPreloaded();
 				}
-				else if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
-					self.onFullScreenAdLoaded();
+				else if (result == "onFullScreenAdLoaded") {
+					if (self.onFullScreenAdLoaded)
+						self.onFullScreenAdLoaded();
 				}
-				else if (result == "onFullScreenAdShown" || result['result'] == "onFullScreenAdShown" ) {
-					self.onFullScreenAdShown();
+				else if (result == "onFullScreenAdShown") {
+					if (self.onFullScreenAdShown)
+						self.onFullScreenAdShown();
 				}
-				else if (result == "onFullScreenAdHidden" || result['result'] == "onFullScreenAdHidden" ) {
+				else if (result == "onFullScreenAdHidden") {
 					 if (self.onFullScreenAdClosed)
 						self.onFullScreenAdClosed(); //deprecated
 					 if (self.onFullScreenAdHidden)
 						self.onFullScreenAdHidden();
 				}
 			},
-            errorCallback,
+            function (error) {
+			},
             'Admob',
             'preloadFullScreenAd',
             []
         ); 
     },
-	reloadFullScreenAd: function(successCallback, errorCallback) {
+	reloadFullScreenAd: function() {
 		var self = this;	
         cordova.exec(
             function (result) {
-				if (result == "onFullScreenAdPreloaded" || result['result'] == "onFullScreenAdPreloaded" ) {
-					self.onFullScreenAdPreloaded();
+				if (result == "onFullScreenAdPreloaded") {
+					if (self.onFullScreenAdPreloaded)
+						self.onFullScreenAdPreloaded();
 				}
-				else if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
-					self.onFullScreenAdLoaded();
+				else if (result == "onFullScreenAdLoaded") {
+					if (self.onFullScreenAdLoaded)
+						self.onFullScreenAdLoaded();
 				}
-				else if (result == "onFullScreenAdShown" || result['result'] == "onFullScreenAdShown" ) {
-					self.onFullScreenAdShown();
+				else if (result == "onFullScreenAdShown") {
+					if (self.onFullScreenAdShown)
+						self.onFullScreenAdShown();
 				}
-				else if (result == "onFullScreenAdHidden" || result['result'] == "onFullScreenAdHidden" ) {
+				else if (result == "onFullScreenAdHidden") {
 					 if (self.onFullScreenAdClosed)
 						self.onFullScreenAdClosed(); //deprecated
 					 if (self.onFullScreenAdHidden)
 						self.onFullScreenAdHidden();
 				}
 			},
-            errorCallback,
+            function (error) {
+			},
             'Admob',
             'reloadFullScreenAd',
             []
         ); 
     },	
-    showFullScreenAd: function(successCallback, errorCallback) {
+    showFullScreenAd: function() {
 		var self = this;
 		cordova.exec(
             function (result) {
-				if (result == "onFullScreenAdPreloaded" || result['result'] == "onFullScreenAdPreloaded" ) {
-					self.onFullScreenAdPreloaded();
+				if (result == "onFullScreenAdPreloaded") {
+					if (self.onFullScreenAdPreloaded)
+						self.onFullScreenAdPreloaded();
 				}
-				else if (result == "onFullScreenAdLoaded" || result['result'] == "onFullScreenAdLoaded" ) {
-					self.onFullScreenAdLoaded();
+				else if (result == "onFullScreenAdLoaded") {
+					if (self.onFullScreenAdLoaded)
+						self.onFullScreenAdLoaded();
 				}
-				else if (result == "onFullScreenAdShown" || result['result'] == "onFullScreenAdShown" ) {
-					self.onFullScreenAdShown();
+				else if (result == "onFullScreenAdShown") {
+					if (self.onFullScreenAdShown)
+						self.onFullScreenAdShown();
 				}
-				else if (result == "onFullScreenAdHidden" || result['result'] == "onFullScreenAdHidden" ) {
+				else if (result == "onFullScreenAdHidden") {
 					 if (self.onFullScreenAdClosed)
 						self.onFullScreenAdClosed(); //deprecated
 					 if (self.onFullScreenAdHidden)
 						self.onFullScreenAdHidden();
 				}
 			},
-            errorCallback,
+            function (error) {
+			},
             'Admob',
             'showFullScreenAd',
             []

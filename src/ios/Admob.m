@@ -92,18 +92,18 @@
     //self.viewController
 
 	self.bannerAdPreload = YES;
-	
-	[self _preloadBannerAd];
 
     self.bannerViewCallbackId = command.callbackId;
+	
+	[self _preloadBannerAd];
 }
 
 - (void)reloadBannerAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
 
-	[self _reloadBannerAd];
-
     self.bannerViewCallbackId = command.callbackId;
+
+	[self _reloadBannerAd];
 }
 
 - (void)showBannerAd: (CDVInvokedUrlCommand*)command {
@@ -114,9 +114,9 @@
 	NSString *size = [command.arguments objectAtIndex: 1];
 	NSLog(@"%@", size);
 
-	[self _showBannerAd:position aSize:size];
-
     self.bannerViewCallbackId = command.callbackId;
+
+	[self _showBannerAd:position aSize:size];
 }
 
 - (void)hideBannerAd: (CDVInvokedUrlCommand*)command {
@@ -128,30 +128,41 @@
 }
 - (void)preloadFullScreenAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
-
-	self.fullScreenAdPreload = YES;	
 	
-	[self _preloadFullScreenAd];
+	self.fullScreenAdPreload = YES;	
 
     self.interstitialViewCallbackId = command.callbackId;	
+	
+	[self _preloadFullScreenAd];
 }
 
 - (void)reloadFullScreenAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
 
+	if (self.interstitialView == nil) {
+		//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+		//[pr setKeepCallbackAsBool:YES];
+		//[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+		//[pr setKeepCallbackAsBool:YES];
+		[self.commandDelegate sendPluginResult:pr callbackId:command.callbackId];
+
+		return;
+	}			
+			
 	self.fullScreenAdPreload = YES;	
-	
-	[self _reloadFullScreenAd];
-	
+
     self.interstitialViewCallbackId = command.callbackId;	
+	
+	[self _reloadFullScreenAd];	
 }
 
 - (void)showFullScreenAd: (CDVInvokedUrlCommand*)command {
     //self.viewController
-	
-	[self _showFullScreenAd];
-    
+
     self.interstitialViewCallbackId = command.callbackId;
+	
+	[self _showFullScreenAd];    
 }
 
 //-------------------------------------------------------------------
@@ -422,26 +433,18 @@
 	NSLog(@"adViewDidReceiveAd");
 
 	if(bannerAdPreload) {
-		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-		[dict setObject:@"onBannerAdPreloaded" forKey:@"result"];
-		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onBannerAdPreloaded"];
 		[pr setKeepCallbackAsBool:YES];
 		[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];
-		//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-		//[dict setObject:@"onBannerAdPreloaded" forKey:@"result"];
-		//pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+		//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 		//[pr setKeepCallbackAsBool:YES];
 		//[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];		
 	}
 	
-	NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-	[dict setObject:@"onBannerAdLoaded" forKey:@"result"];
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onBannerAdLoaded"];	
 	//[pr setKeepCallbackAsBool:YES];
 	[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];
-	//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-	//[dict setObject:@"onBannerAdLoaded" forKey:@"result"];
-	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 	//[pr setKeepCallbackAsBool:YES];
 	//[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];	
 	
@@ -468,26 +471,18 @@
 	NSLog(@"interstitialDidReceiveAd");
 	
 	if(fullScreenAdPreload) {
-		NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-		[dict setObject:@"onFullScreenAdPreloaded" forKey:@"result"];
-		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdPreloaded"];
 		[pr setKeepCallbackAsBool:YES];
 		[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
-		//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-		//[dict setObject:@"onFullScreenAdPreloaded" forKey:@"result"];
-		//pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+		//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 		//[pr setKeepCallbackAsBool:YES];
 		//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];			
 	}
 	
-	NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-	[dict setObject:@"onFullScreenAdLoaded" forKey:@"result"];
-	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+	CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdLoaded"];
 	[pr setKeepCallbackAsBool:YES];
 	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
-	//NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-	//[dict setObject:@"onFullScreenAdLoaded" forKey:@"result"];
-	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+	//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 	//[pr setKeepCallbackAsBool:YES];
 	//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];		
 	
@@ -504,16 +499,12 @@
 - (void)interstitialWillPresentScreen:(GADInterstitial *)ad {
 	NSLog(@"interstitialWillPresentScreen");
 	
-    NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-    [dict setObject:@"onFullScreenAdShown" forKey:@"result"];
-    CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+    CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdShown"];
 	[pr setKeepCallbackAsBool:YES];
 	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
-    //NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-    //[dict setObject:@"onFullScreenAdShown" forKey:@"result"];
-    //CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+    //CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 	//[pr setKeepCallbackAsBool:YES];
-	//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];		
+	//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];
 }
 - (void)interstitialWillDismissScreen:(GADInterstitial *)ad {
 	NSLog(@"interstitialWillDismissScreen");
@@ -521,14 +512,10 @@
 - (void)interstitialDidDismissScreen:(GADInterstitial *)ad {
 	NSLog(@"interstitialDidDismissScreen");
 	
-    NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-    [dict setObject:@"onFullScreenAdHidden" forKey:@"result"];
-    CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:dict];
+    CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsString:@"onFullScreenAdHidden"];
 	//[pr setKeepCallbackAsBool:YES];
 	[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];	
-    //NSMutableDictionary* dict = [NSMutableDictionary dictionaryWithCapacity:1];
-    //[dict setObject:@"onFullScreenAdHidden" forKey:@"result"];
-    //CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsDictionary:dict];
+    //CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
 	//[pr setKeepCallbackAsBool:YES];
 	//[self.commandDelegate sendPluginResult:pr callbackId:self.interstitialViewCallbackId];	
 }

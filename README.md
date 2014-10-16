@@ -26,11 +26,11 @@ Change Log:
 
 To-Do:
 
+	supports ios split mode
+	supports wp8 split mode
 	supports other position: 'top-left', 'top-right', 'left', 'center', 'right', 'bottom-left', 'bottom-right' on ios.
 	supports banner reposition when orientation changes on ios.
 	supports SMART_BANNER resize when orientation changes on ios.	
-	supports ios split mode
-	supports wp8 split mode
 ```
 # Install phonegap plugin #
 

@@ -101,6 +101,17 @@ namespace Cordova.Extension.Commands
         }
         public void reloadFullScreenAd(string args)
         {
+            if (interstitialView == null)
+				//PluginResult pr = new PluginResult(PluginResult.Status.OK);
+				//pr.KeepCallback = true;
+				//DispatchCommandResult(pr);
+				PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+				//pr.KeepCallback = true;
+				DispatchCommandResult(pr);
+
+				return;				
+			}
+		
 			fullScreenAdPreload = true;			
 
             Deployment.Current.Dispatcher.BeginInvoke(() =>
