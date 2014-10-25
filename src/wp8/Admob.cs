@@ -23,8 +23,8 @@ namespace Cordova.Extension.Commands
 		private bool isOverlap;
 		private bool isTest;
 		//
-        private AdView bannerView;
-        private InterstitialAd interstitialView;
+        private AdView bannerView; //
+        private InterstitialAd interstitialView; //
 		//
 		public bool bannerAdPreload;	
 		public bool fullScreenAdPreload;	
@@ -77,9 +77,46 @@ namespace Cordova.Extension.Commands
 			Debug.WriteLine(position);
 			string size=JsonHelper.Deserialize<string[]>(args)[1];
 			Debug.WriteLine(size);
-
+			
             Deployment.Current.Dispatcher.BeginInvoke(() =>
             {
+				//
+				bool bannerIsShowing = false;
+				if (isOverlap) {
+					//if banner is showing
+					if (bannerView != null)
+					{
+						PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
+						if (frame != null)
+						{
+							PhoneApplicationPage page = frame.Content as PhoneApplicationPage;
+							if (page != null)
+							{
+								Grid grid = page.FindName("LayoutRoot") as Grid;							
+								if (grid != null)
+								{
+                                    if (grid.Children.Contains(bannerView))
+                                    {
+                                        bannerIsShowing = true;
+                                    }									
+								}
+							}
+						}
+					}
+				}
+				else {
+				}
+				if (bannerIsShowing && position.Equals(this.position) && size.Equals(this.size)) {		
+					PluginResult pr = new PluginResult(PluginResult.Status.OK);
+					//pr.KeepCallback = true;
+					DispatchCommandResult(pr);
+					//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+					//pr.KeepCallback = true;
+					//DispatchCommandResult(pr);
+					
+					return;
+				}
+				
                 _showBannerAd(position, size);
             });
         }
@@ -101,7 +138,7 @@ namespace Cordova.Extension.Commands
         }
         public void reloadFullScreenAd(string args)
         {
-            if (interstitialView == null)
+            if (interstitialView == null) {
 				//PluginResult pr = new PluginResult(PluginResult.Status.OK);
 				//pr.KeepCallback = true;
 				//DispatchCommandResult(pr);
@@ -176,6 +213,7 @@ namespace Cordova.Extension.Commands
         }
         private void _preloadBannerAd_overlap()
         {
+			//if banner is showing
             if (bannerView != null)
             {
                 PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
@@ -184,10 +222,13 @@ namespace Cordova.Extension.Commands
                     PhoneApplicationPage page = frame.Content as PhoneApplicationPage;
                     if (page != null)
                     {
-                        Grid grid = page.FindName("LayoutRoot") as Grid;
-                        if (grid != null)
+                        Grid grid = page.FindName("LayoutRoot") as Grid;                        
+						if (grid != null)
                         {
-                            grid.Children.Remove(bannerView);
+							if (grid.Children.Contains(bannerView))
+							{
+								grid.Children.Remove(bannerView);
+							}                            
                         }
                     }
                 }
@@ -315,7 +356,10 @@ namespace Cordova.Extension.Commands
                         Grid grid = page.FindName("LayoutRoot") as Grid;
                         if (grid != null)
                         {
-                            grid.Children.Remove(bannerView);
+							if (grid.Children.Contains(bannerView))
+							{
+								grid.Children.Remove(bannerView);
+							}
                         }
                     }
                 }

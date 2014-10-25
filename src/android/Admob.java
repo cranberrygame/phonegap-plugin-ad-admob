@@ -92,9 +92,9 @@ public class Admob extends CordovaPlugin {
 	private boolean isOverlap;
     private boolean isTest;
 	//
-	private AdView bannerView; 
+	private AdView bannerView; //
 	private RelativeLayout bannerViewLayout;
-    private InterstitialAd interstitialView;
+    private InterstitialAd interstitialView;//
 	public CallbackContext bannerViewCC;
 	public CallbackContext interstitialViewCC;
 	//
@@ -281,6 +281,37 @@ public class Admob extends CordovaPlugin {
 			final String size = args.getString(1);
 			Log.d(LOG_TAG, size);
 
+			//
+			boolean bannerIsShowing = false;
+			if (isOverlap) {
+				//if banner is showing
+				if (bannerView != null) {							
+					RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
+					if (bannerViewLayout != null) {
+						bannerIsShowing = true;
+					}
+				}				
+			}
+			else {
+				//if banner is showing
+				if (bannerView != null) {							
+					ViewGroup parentView = (ViewGroup)bannerView.getParent();
+					if (parentView != null) {
+						bannerIsShowing = true;
+					}
+				}	
+			}
+			if (bannerIsShowing && position.equals(this.position) && size.equals(this.size)) {
+				PluginResult pr = new PluginResult(PluginResult.Status.OK);
+				//pr.setKeepCallback(true);
+				callbackContext.sendPluginResult(pr);
+				//PluginResult pr = new PluginResult(PluginResult.Status.ERROR);
+				//pr.setKeepCallback(true);
+				//callbackContext.sendPluginResult(pr);			
+			
+				return true;
+			}			
+			
 			bannerViewCC = callbackContext;
 			
 			final CallbackContext delayedCC = callbackContext;
@@ -437,9 +468,9 @@ public class Admob extends CordovaPlugin {
 			webView.addView(bannerViewLayout);
 		}
 		
+		//if banner is showing
 		if (bannerView != null) {							
 			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
-			//if banner is showing
 			if (bannerViewLayout != null) {
 				bannerViewLayout.removeView(bannerView);
 				bannerView.destroy();
@@ -448,9 +479,9 @@ public class Admob extends CordovaPlugin {
 		}
 	}
 	private void _preloadBannerAd_split(){
+		//if banner is showing
 		if (bannerView != null) {							
 			ViewGroup parentView = (ViewGroup)bannerView.getParent();
-			//if banner is showing
 			if (parentView != null) {
 				parentView.removeView(bannerView);
 				bannerView.destroy();

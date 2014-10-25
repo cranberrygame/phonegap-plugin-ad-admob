@@ -17,8 +17,8 @@
 @synthesize isOverlap;
 @synthesize isTest;
 //
-@synthesize bannerView;
-@synthesize interstitialView;
+@synthesize bannerView; //
+@synthesize interstitialView; //
 @synthesize bannerViewCallbackId;
 @synthesize interstitialViewCallbackId;
 //
@@ -114,6 +114,30 @@
 	NSString *size = [command.arguments objectAtIndex: 1];
 	NSLog(@"%@", size);
 
+	//
+	BOOL bannerIsShowing = NO;
+	if (isOverlap) {
+		//if banner is showing
+		if (bannerView != nil) {
+            UIView* webView = [bannerView superview];
+            if (webView != nil) {
+                bannerIsShowing = YES;
+            }
+		}
+	}
+	else {
+	}
+	if (bannerIsShowing && [position isEqualToString:self.position] && [size isEqualToString:self.size]) {
+		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
+		//[pr setKeepCallbackAsBool:YES];
+		[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];
+		//CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR];
+		//[pr setKeepCallbackAsBool:YES];
+		//[self.commandDelegate sendPluginResult:pr callbackId:self.bannerViewCallbackId];		
+	
+		return;
+	}
+			
     self.bannerViewCallbackId = command.callbackId;
 
 	[self _showBannerAd:position aSize:size];
@@ -231,12 +255,16 @@
     [self _reloadBannerAd];
 }
 - (void) _preloadBannerAd_overlap
-{
+{ 
+    //if banner is showing
     if (bannerView != nil)
     {
-        //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
-        [self.bannerView removeFromSuperview];
-		self.bannerView = nil;
+        UIView* webView = [bannerView superview];
+        if (webView != nil) {
+            //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
+            [self.bannerView removeFromSuperview];
+            bannerView = nil;
+        }
 	}
 }
 - (void) _preloadBannerAd_split
@@ -374,9 +402,12 @@
 {
     if (bannerView != nil)
     {
-        //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
-        [self.bannerView removeFromSuperview];
-		bannerView = nil;	
+        UIView* webView = [bannerView superview];
+        if (webView != nil) {
+            //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
+            [self.bannerView removeFromSuperview];
+            bannerView = nil;
+        }
 	}
 }
 - (void) _hideBannerAd_split
