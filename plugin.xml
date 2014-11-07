@@ -19,7 +19,7 @@
 <!--
 		<dependency id="com.google.playservices" url="https://github.com/MobileChromeApps/google-play-services" commit="5d784fb083027fd2c1ef1545d8a2b0d595e4ec69" />
 -->		
-		<dependency id="com.google.playservices@17.0.0" />
+		<dependency id="com.google.playservices@19.0.0" />
 		
 	    <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Admob" >
