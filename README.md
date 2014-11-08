@@ -157,7 +157,7 @@ window.admob.showFullScreenAd();
 window.admob.reloadFullScreenAd();
 ```
 # Examples #
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/basic/index.html">example/basic/index.html</a><br>
+<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/index.html">example/index.html</a><br>
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/advanced/index.html">example/advanced/index.html</a>
 # Test #
 

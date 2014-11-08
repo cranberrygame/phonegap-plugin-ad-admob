@@ -149,8 +149,8 @@ public class Admob extends CordovaPlugin {
 	private void addEvent_overlap() {
 		//http://stackoverflow.com/questions/11281562/android-admob-resize-on-landscape
 		if (bannerView != null) {							
-			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
 			//if banner is showing
+			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
 			if (bannerViewLayout != null) {
 				//bannerViewLayout.removeView(bannerView);
 				//bannerView.destroy();
@@ -171,8 +171,8 @@ public class Admob extends CordovaPlugin {
 	}
 	private void addEvent_split() {
 		if (bannerView != null) {							
-			ViewGroup parentView = (ViewGroup)bannerView.getParent();
 			//if banner is showing
+			ViewGroup parentView = (ViewGroup)bannerView.getParent();
 			if (parentView != null) {
 				//parentView.removeView(bannerView);
 				//bannerView.destroy();
@@ -284,8 +284,8 @@ public class Admob extends CordovaPlugin {
 			//
 			boolean bannerIsShowing = false;
 			if (isOverlap) {
-				//if banner is showing
 				if (bannerView != null) {							
+					//if banner is showing
 					RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
 					if (bannerViewLayout != null) {
 						bannerIsShowing = true;
@@ -293,8 +293,8 @@ public class Admob extends CordovaPlugin {
 				}				
 			}
 			else {
-				//if banner is showing
 				if (bannerView != null) {							
+					//if banner is showing
 					ViewGroup parentView = (ViewGroup)bannerView.getParent();
 					if (parentView != null) {
 						bannerIsShowing = true;
@@ -468,8 +468,8 @@ public class Admob extends CordovaPlugin {
 			webView.addView(bannerViewLayout);
 		}
 		
-		//if banner is showing
 		if (bannerView != null) {							
+			//if banner is showing
 			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
 			if (bannerViewLayout != null) {
 				bannerViewLayout.removeView(bannerView);
@@ -479,8 +479,8 @@ public class Admob extends CordovaPlugin {
 		}
 	}
 	private void _preloadBannerAd_split(){
-		//if banner is showing
 		if (bannerView != null) {							
+			//if banner is showing
 			ViewGroup parentView = (ViewGroup)bannerView.getParent();
 			if (parentView != null) {
 				parentView.removeView(bannerView);
@@ -596,8 +596,8 @@ public class Admob extends CordovaPlugin {
 	}
 	private void _hideBannerAd_overlap(){
 		if (bannerView != null) {							
-			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
 			//if banner is showing
+			RelativeLayout bannerViewLayout = (RelativeLayout)bannerView.getParent();
 			if (bannerViewLayout != null) {
 				bannerViewLayout.removeView(bannerView);
 				bannerView.destroy();
@@ -607,8 +607,8 @@ public class Admob extends CordovaPlugin {
 	}	
 	private void _hideBannerAd_split(){
 		if (bannerView != null) {							
-			ViewGroup parentView = (ViewGroup)bannerView.getParent();
 			//if banner is showing
+			ViewGroup parentView = (ViewGroup)bannerView.getParent();
 			if (parentView != null) {
 				parentView.removeView(bannerView);
 				bannerView.destroy();

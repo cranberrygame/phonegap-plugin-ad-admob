@@ -117,8 +117,9 @@
 	//
 	BOOL bannerIsShowing = NO;
 	if (isOverlap) {
-		//if banner is showing
 		if (bannerView != nil) {
+			//if banner is showing			
+			//if ([bannerView isDescendantOfView:webView]) {
             UIView* webView = [bannerView superview];
             if (webView != nil) {
                 bannerIsShowing = YES;
@@ -126,6 +127,16 @@
 		}
 	}
 	else {
+/*
+		if (bannerView != nil) {
+			//if banner is showing
+			//if ([bannerView isDescendantOfView:[webView superview]]) {			
+            UIView* webView = [bannerView superview];
+            if (webView != nil) {
+                bannerIsShowing = YES;
+            }
+		}
+*/	
 	}
 	if (bannerIsShowing && [position isEqualToString:self.position] && [size isEqualToString:self.size]) {
 		CDVPluginResult* pr = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK];
@@ -256,9 +267,9 @@
 }
 - (void) _preloadBannerAd_overlap
 { 
-    //if banner is showing
     if (bannerView != nil)
     {
+		//if banner is showing
         UIView* webView = [bannerView superview];
         if (webView != nil) {
             //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
@@ -269,7 +280,9 @@
 }
 - (void) _preloadBannerAd_split
 {
-
+/*
+    [self _preloadBannerAd_overlap];
+*/
 }
 - (void) _reloadBannerAd
 {
@@ -376,18 +389,13 @@
 - (void) _showBannerAd_split:(NSString *)position aSize:(NSString *)size
 {
 /*
-		if (webView != null) {							
-			ViewGroup parentView = (ViewGroup)webView.getParent();
-			if (parentView != null) {
-				if (position.equals("top-left") || position.equals("top-center")|| position.equals("top-right") || position.equals("left") || position.equals("center") || position.equals("right")) {	
-					parentView.addView(bannerView, 0);
-				}
-				else {		
-					parentView.addView(bannerView);
-				}
-				//parentView.bringToFront();
-			}
-		}
+    if (webView != nil)
+    {
+        UIView* parentView = [webView superview];
+        if (parentView != nil) {
+			[parentView addSubview:bannerView];		
+        }
+	}		
 */
 
 }
@@ -402,6 +410,7 @@
 {
     if (bannerView != nil)
     {
+		//if banner is showing
         UIView* webView = [bannerView superview];
         if (webView != nil) {
             //https://developer.apple.com/library/ios/documentation/uikit/reference/UIView_Class/UIView/UIView.html#//apple_ref/occ/cl/UIView
@@ -412,6 +421,9 @@
 }
 - (void) _hideBannerAd_split
 {
+/*
+	[self _hideBannerAd_overlap];
+*/	
 }
 - (void) _preloadFullScreenAd
 {    
