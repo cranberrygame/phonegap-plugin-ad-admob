@@ -23,6 +23,9 @@ Change Log:
 2014.10.3
 	supports banner ad callback (onBannerAdPreloaded)
 	supports full screen ad callback (onFullScreenAdPreloaded)
+1.0.31
+	Updated Admob SDK
+		iOS 6.12.2
 
 To-Do:
 
@@ -32,32 +35,11 @@ To-Do:
 	supports banner reposition when orientation changes on ios.
 	supports SMART_BANNER resize when orientation changes on ios.	
 ```
+# Server setting #
+```c
+```
 # Install phonegap plugin #
 
-## Phonegap build service (construct2 automatically add this tag to config.xml) ##
-```c
-not yet supported
-```
-## Phonegap cli ##
-```c
-cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
-
-cf)apple app store meta data
-
-xport Compliance
-	Have you added or made changes to encryption features since your last submission of this app? (No)
-
-Advertising Identifier
-	Does this app use the Advertising Identifier (IDFA)? (Yes)
-	
-	This app uses the Advertising Identifier to (select all that apply):
-		Serve advertisements within the app (check)
-	
-	Limit Ad Tracking setting in iOS (check)	
-	
-Previous Purchase Restrictions
-	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
-```
 ## Crosswalk ##
 ```c
 XDK PORJECTS - your_xdk_project - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGINS AND PERMISSIONS - Third Party Plugins - Add a Third Party Plugin - Get Plugin from the Web -
@@ -81,6 +63,30 @@ Advertising Identifier
 	
 Previous Purchase Restrictions
 	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
+```
+## Phonegap cli ##
+```c
+cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
+
+cf)apple app store meta data
+
+xport Compliance
+	Have you added or made changes to encryption features since your last submission of this app? (No)
+
+Advertising Identifier
+	Does this app use the Advertising Identifier (IDFA)? (Yes)
+	
+	This app uses the Advertising Identifier to (select all that apply):
+		Serve advertisements within the app (check)
+	
+	Limit Ad Tracking setting in iOS (check)	
+	
+Previous Purchase Restrictions
+	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
+```
+## Phonegap build service (construct2 automatically add this tag to config.xml) ##
+```c
+not yet supported
 ```
 # API #
 ```javascript
@@ -161,12 +167,13 @@ window.admob.reloadFullScreenAd();
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/advanced/index.html">example/advanced/index.html</a>
 # Test #
 
+# How to build crosswalk and fix build error #
+
+See https://dl.dropboxusercontent.com/u/186681453/howto/how_to_build_crosswalk_and_fix_build_error/index.html
+# Free advertising for games/apps made with crosswalk related c2 plugins (+Phonegap) #
+
+Reply this post, then I'll add your games/apps to the list: https://www.scirra.com/forum/viewtopic.php?t=115517
 # Useful links #
-Phonegap related c2 plugins (+Crosswalk)<br>
+Crosswalk related c2 plugins (+Phonegap)<br>
 https://www.scirra.com/forum/viewtopic.php?t=109586
-
-Games/Apps made with phonegap related c2 plugins (+Crosswalk)<br>
-https://www.scirra.com/forum/viewtopic.php?t=115517
-
-Construct 2: an easy html5 games/apps maker<br>
-https://www.scirra.com/
+# Credits #

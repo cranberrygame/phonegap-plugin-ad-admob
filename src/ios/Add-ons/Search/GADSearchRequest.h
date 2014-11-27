@@ -1,12 +1,13 @@
 //
 //  GADSearchRequest.h
-//  Google Search Ads iOS SDK
+//  Google Mobile Ads SDK
 //
 //  Copyright 2011 Google Inc. All rights reserved.
 //
 
-#import "GADRequest.h"
 #import <UIKit/UIKit.h>
+
+@class GADRequest;
 
 // Types of borders for search ads.
 typedef NS_ENUM(NSUInteger, GADSearchBorderType) {
