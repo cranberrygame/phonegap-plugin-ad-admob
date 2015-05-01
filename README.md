@@ -1,13 +1,15 @@
 # Overview #
 show admob banner and full screen ad
 
-[android, ios, wp8] [phonegap cli] [crosswalk]
+[android, ios, wp8] [cordova cli] [crosswalk]
 
 requires admob account http://www.google.com/ads/admob/
 
-```c
-Change Log:
+more update and support will be done from here: http://plugins.cordova.io/#/package/com.cranberrygame.cordova.plugin.ad.admob (or https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.ad.admob)
+just change com.cranberrygame.phonegap.plugin.ad.admob to com.cranberrygame.cordova.plugin.ad.admob
 
+# Change log #
+```c
 2014.9.17
 	supports SKYSCRAPER size (120x600, Tablets, ipad only)
 	Added additional example (example/banner_position_size/index.html)
@@ -26,6 +28,8 @@ Change Log:
 1.0.31
 	Updated Admob SDK
 		iOS 6.12.2
+1.0.32
+	Further update and support will be done frome here: http://plugins.cordova.io/#/package/com.cranberrygame.cordova.plugin.ad.admob (or https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.ad.admob)
 
 To-Do:
 
@@ -35,11 +39,29 @@ To-Do:
 	supports banner reposition when orientation changes on ios.
 	supports SMART_BANNER resize when orientation changes on ios.	
 ```
-# Server setting #
-```c
-```
-# Install phonegap plugin #
 
+# Install plugin #
+
+## Phonegap cli ##
+```c
+cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
+
+cf)apple app store meta data
+
+xport Compliance
+	Have you added or made changes to encryption features since your last submission of this app? (No)
+
+Advertising Identifier
+	Does this app use the Advertising Identifier (IDFA)? (Yes)
+	
+	This app uses the Advertising Identifier to (select all that apply):
+		Serve advertisements within the app (check)
+	
+	Limit Ad Tracking setting in iOS (check)	
+	
+Previous Purchase Restrictions
+	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
+```
 ## Crosswalk ##
 ```c
 XDK PORJECTS - your_xdk_project - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGINS AND PERMISSIONS - Third Party Plugins - Add a Third Party Plugin - Get Plugin from the Web -
@@ -64,30 +86,19 @@ Advertising Identifier
 Previous Purchase Restrictions
 	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
 ```
-## Phonegap cli ##
+## Phonegap build service (config.xml) ##
 ```c
-cordova plugin add com.cranberrygame.phonegap.plugin.ad.admob
-
-cf)apple app store meta data
-
-xport Compliance
-	Have you added or made changes to encryption features since your last submission of this app? (No)
-
-Advertising Identifier
-	Does this app use the Advertising Identifier (IDFA)? (Yes)
-	
-	This app uses the Advertising Identifier to (select all that apply):
-		Serve advertisements within the app (check)
-	
-	Limit Ad Tracking setting in iOS (check)	
-	
-Previous Purchase Restrictions
-	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
+<gap:plugin name="com.cranberrygame.phonegap.plugin.ad.admob" source="plugins.cordova.io" />
 ```
-## Phonegap build service (construct2 automatically add this tag to config.xml) ##
+## Construct2 ##
+
+Download construct2 admob plugin and example
+https://plus.google.com/communities/117978754675005605917 
+
+# Server setting #
 ```c
-not yet supported
 ```
+
 # API #
 ```javascript
 var adUnit = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
@@ -165,15 +176,21 @@ window.admob.reloadFullScreenAd();
 # Examples #
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/index.html">example/index.html</a><br>
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/advanced/index.html">example/advanced/index.html</a>
+
 # Test #
 
-# How to build crosswalk and fix build error #
+Youtube
+[![](http://img.youtube.com/vi/xXrVb8E8gMM/0.jpg)](https://www.youtube.com/watch?v=xXrVb8E8gMM&feature=youtu.be "Youtube")
 
-See https://dl.dropboxusercontent.com/u/186681453/howto/how_to_build_crosswalk_and_fix_build_error/index.html
-# Free advertising for games/apps made with crosswalk related c2 plugins (+Phonegap) #
+CordovaApp-debug.apk
+https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.ad.admob/blob/master/doc/CordovaApp-debug.apk
 
-Reply this post, then I'll add your games/apps to the list: https://www.scirra.com/forum/viewtopic.php?t=115517
 # Useful links #
-Crosswalk related c2 plugins (+Phonegap)<br>
-https://www.scirra.com/forum/viewtopic.php?t=109586
+
+Cordova monetisation-related plugins G+ community<br>
+https://plus.google.com/communities/116032133386884708413<br>
+<br>
+Construct2 monetisation-related plugins by cordova G+ community<br>
+https://plus.google.com/communities/117978754675005605917<br>
+
 # Credits #
