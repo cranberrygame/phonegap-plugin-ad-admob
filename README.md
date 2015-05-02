@@ -5,8 +5,8 @@ show admob banner and full screen ad
 
 requires admob account http://www.google.com/ads/admob/
 
-more update and support will be done from here: http://plugins.cordova.io/#/package/com.cranberrygame.cordova.plugin.ad.admob (or https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.ad.admob)
-just change com.cranberrygame.phonegap.plugin.ad.admob to com.cranberrygame.cordova.plugin.ad.admob
+moved to com.cranberrygame.cordova.plugin.ad.admob for better update and management.
+just change package name.
 
 # Change log #
 ```c
@@ -90,10 +90,6 @@ Previous Purchase Restrictions
 ```c
 <gap:plugin name="com.cranberrygame.phonegap.plugin.ad.admob" source="plugins.cordova.io" />
 ```
-## Construct2 ##
-
-Download construct2 admob plugin and example
-https://plus.google.com/communities/117978754675005605917 
 
 # Server setting #
 ```c
@@ -171,26 +167,24 @@ window.admob.hideBannerAd();
 
 window.admob.preloadFullScreenAd();
 window.admob.showFullScreenAd();
-window.admob.reloadFullScreenAd();
 ```
 # Examples #
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/index.html">example/index.html</a><br>
+<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/index.html">example/basic/index.html</a><br>
 <a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/advanced/index.html">example/advanced/index.html</a>
 
 # Test #
 
-Youtube
 [![](http://img.youtube.com/vi/xXrVb8E8gMM/0.jpg)](https://www.youtube.com/watch?v=xXrVb8E8gMM&feature=youtu.be "Youtube")
 
-CordovaApp-debug.apk
+You can also run following test apk.
 https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.ad.admob/blob/master/doc/CordovaApp-debug.apk
 
 # Useful links #
 
-Cordova monetisation-related plugins G+ community<br>
+Cordova promotion & monetisation plugins G+ community<br>
 https://plus.google.com/communities/116032133386884708413<br>
 <br>
-Construct2 monetisation-related plugins by cordova G+ community<br>
+C2 promotion & monetisation plugins by cordova G+ community<br>
 https://plus.google.com/communities/117978754675005605917<br>
 
 # Credits #
