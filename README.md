@@ -5,8 +5,9 @@ show admob banner and full screen ad
 
 requires admob account http://www.google.com/ads/admob/
 
-moved to com.cranberrygame.cordova.plugin.ad.admob for better update and management.
-just change package name.
+moved to com.cranberrygame.cordova.plugin.ad.admob for efficient update. (just change package name)
+
+check updated cordova promotion & monetisation plugins from here: http://cranberrygame.github.io
 
 # Change log #
 ```c
@@ -181,10 +182,7 @@ https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.ad.admob/blob/
 
 # Useful links #
 
-Cordova promotion & monetisation plugins G+ community<br>
-https://plus.google.com/communities/116032133386884708413<br>
-<br>
-C2 promotion & monetisation plugins by cordova G+ community<br>
-https://plus.google.com/communities/117978754675005605917<br>
+Cordova promotion & monetisation plugins<br>
+http://cranberrygame.github.io
 
 # Credits #
