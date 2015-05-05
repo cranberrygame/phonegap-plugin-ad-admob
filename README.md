@@ -1,13 +1,17 @@
+Phonegap AdMob plugin (Free)
+====================
 # Overview #
 show admob banner and full screen ad
 
-[android, ios, wp8] [cordova cli] [crosswalk]
+[android, ios, wp8] [cordova cli] [xdk]
 
 requires admob account http://www.google.com/ads/admob/
 
-moved to com.cranberrygame.cordova.plugin.ad.admob for efficient update. (just change package name)
+this is open source cordova plugin.
 
-check updated cordova promotion & monetisation plugins from here: http://cranberrygame.github.io
+check updated cordova promotion & monetisation plugins from here: http://cranberrygame.github.io?referrer=github
+
+moved to com.cranberrygame.cordova.plugin.ad.admob for efficient update. (just change package name)
 
 # Change log #
 ```c
@@ -63,7 +67,7 @@ Advertising Identifier
 Previous Purchase Restrictions
 	Are you updating this app because of a significant usability issue or for a legal issue, such as an infringement claim? (No)
 ```
-## Crosswalk ##
+## Xdk ##
 ```c
 XDK PORJECTS - your_xdk_project - CORDOVA 3.X HYBRID MOBILE APP SETTINGS - PLUGINS AND PERMISSIONS - Third Party Plugins - Add a Third Party Plugin - Get Plugin from the Web -
 
@@ -178,7 +182,7 @@ window.admob.showFullScreenAd();
 [![](http://img.youtube.com/vi/xXrVb8E8gMM/0.jpg)](https://www.youtube.com/watch?v=xXrVb8E8gMM&feature=youtu.be "Youtube")
 
 You can also run following test apk.
-https://github.com/cranberrygame/com.cranberrygame.cordova.plugin.ad.admob/blob/master/doc/CordovaApp-debug.apk
+https://dl.dropboxusercontent.com/u/186681453/free/admob/CordovaApp-debug.apk
 
 # Useful links #
 
