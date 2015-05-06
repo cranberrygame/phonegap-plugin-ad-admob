@@ -1,4 +1,4 @@
-Phonegap AdMob plugin (Free)
+Phonegap AdMob plugin
 ====================
 # Overview #
 show admob banner and full screen ad
@@ -11,7 +11,7 @@ this is open source cordova plugin.
 
 check updated cordova promotion & monetisation plugins from here: http://cranberrygame.github.io?referrer=github
 
-moved to com.cranberrygame.cordova.plugin.ad.admob for efficient update. (just change package name)
+moved to com.cranberrygame.cordova.plugin.ad.admob (just change package name)
 
 # Change log #
 ```c
