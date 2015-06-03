@@ -6,35 +6,34 @@
 
 <script>
 
-var adUnit = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
-var adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
+var bannerAdUnit = "ca-app-pub-4906074177432504/9172302471";
+var fullScreenAdUnit = "ca-app-pub-4906074177432504/1649035673";
 var isOverlap = true; //true: overlap, false: split
 var isTest = true;
-
 /*
-var adUnit;
-var adUnitFullScreen;
-var isOverlap = true; //true: overlap, false: split
-var isTest = true;
-//android
-if (navigator.userAgent.match(/Android/i)) {
-	adUnit = "REPLACE_THIS_WITH_YOUR_ANDROID_AD_UNIT";
-	adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_ANDROID_AD_UNIT";
-}
-//ios
-else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
-	adUnit = "REPLACE_THIS_WITH_YOUR_IOS_AD_UNIT";
-	adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_IOS_AD_UNIT";
-}
-//wp8
-else if( navigator.userAgent.match(/Windows Phone/i) ) {
-	adUnit = "REPLACE_THIS_WITH_YOUR_WP8_AD_UNIT";
-	adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_WP8_AD_UNIT";
-}
+ var bannerAdUnit;
+ var fullScreenAdUnit;
+ var isOverlap = true; //true: overlap, false: split
+ var isTest = true;
+ //android
+ if (navigator.userAgent.match(/Android/i)) {
+	bannerAdUnit = "ca-app-pub-4906074177432504/9172302471";
+	fullScreenAdUnit = "ca-app-pub-4906074177432504/1649035673";
+ }
+ //ios
+ else if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i)) {
+	bannerAdUnit = "ca-app-pub-4906074177432504/4602502071";
+	fullScreenAdUnit = "ca-app-pub-4906074177432504/7555968477";
+ }
+ //wp8
+ else if( navigator.userAgent.match(/Windows Phone/i) ) {
+	bannerAdUnit = "ca-app-pub-4906074177432504/4462901274";
+	fullScreenAdUnit = "ca-app-pub-4906074177432504/5939634477";
+ }
 */
 
 document.addEventListener("deviceready", function(){
-	window.admob.setUp(adUnit, adUnitFullScreen, isOverlap, isTest);
+	window.admob.setUp(bannerAdUnit, fullScreenAdUnit, isOverlap, isTest);
 		
 	//banner ad callback
 	window.admob.onBannerAdPreloaded = function() {

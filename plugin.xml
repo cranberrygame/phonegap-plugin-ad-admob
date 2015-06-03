@@ -2,15 +2,15 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     xmlns:android="http://schemas.android.com/apk/res/android"
     id="com.cranberrygame.phonegap.plugin.ad.admob"
-    version="1.0.37">
+    version="1.0.38">
 	
     <name>Phonegap Admob plugin</name>
-    <description>moved to com.cranberrygame.cordova.plugin.ad.admob for efficient update. (just change package name)</description>
+    <description>Changed package name to com.cranberrygame.cordova.plugin.ad.admob</description>
     <author>Sang Ki Kwon (Cranberrygame)</author>		
     <license>MIT</license>
-    <keywords>phonegap, plugin, ad, admob, overlap, split</keywords>
-    <repo>https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob</repo>
-    <issue>https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/issues</issue> 	
+    <keywords>phonegap,plugin,ad,admob,overlap,split</keywords>
+    <repo>https://github.com/cranberrygame/phonegap-plugin-ad-admob</repo>
+    <issue>https://github.com/cranberrygame/phonegap-plugin-ad-admob/issues</issue> 	
 	<engines>
 	    <engine name="cordova" version=">=3.0.0" />
 	</engines>
@@ -28,7 +28,7 @@
 		
 	    <config-file target="res/xml/config.xml" parent="/*">
             <feature name="Admob" >
-                <param name="android-package" value="com.cranberrygame.phonegap.plugin.ad.Admob"/>
+                <param name="android-package" value="com.cranberrygame.cordova.plugin.ad.admob.Admob"/>
             </feature>
         </config-file>
 		
@@ -50,7 +50,7 @@
 -->		
 		<!-- cranberrygame end -->
 	
-        <source-file src="src/android/Admob.java" target-dir="src/com/cranberrygame/phonegap/plugin/ad" />		
+        <source-file src="src/android/Admob.java" target-dir="src/com/cranberrygame/cordova/plugin/ad/admob" />		
 		<!-- cranberrygame start: google-play-services.jar -->
 <!--		
 		<source-file src="src/android/google-play-services.jar" target-dir="libs" />

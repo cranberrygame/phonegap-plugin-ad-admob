@@ -9,9 +9,9 @@ requires admob account http://www.google.com/ads/admob/
 
 this is open source cordova plugin.
 
-check updated cordova promotion & monetisation plugins from here: http://cranberrygame.github.io?referrer=github
+You can see Plugins For Cordova in one page: http://cranberrygame.github.io?referrer=github
 
-moved to com.cranberrygame.cordova.plugin.ad.admob (just change package name)
+Changed package name to com.cranberrygame.cordova.plugin.ad.admob
 
 # Change log #
 ```c
@@ -106,7 +106,6 @@ var adUnit = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
 var adUnitFullScreen = "REPLACE_THIS_WITH_YOUR_AD_UNIT";
 var isOverlap = true; //true: overlap, false: split
 var isTest = true;
-
 /*
 var adUnit;
 var adUnitFullScreen;
@@ -174,19 +173,18 @@ window.admob.preloadFullScreenAd();
 window.admob.showFullScreenAd();
 ```
 # Examples #
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/index.html">example/basic/index.html</a><br>
-<a href="https://github.com/cranberrygame/com.cranberrygame.phonegap.plugin.ad.admob/blob/master/example/advanced/index.html">example/advanced/index.html</a>
+<a href="https://github.com/cranberrygame/phonegap-plugin-ad-admob/blob/master/example/basic/index.html">example/basic/index.html</a><br>
+<a href="https://github.com/cranberrygame/phonegap-plugin-ad-admob/blob/master/example/advanced/index.html">example/advanced/index.html</a>
 
 # Test #
 
 [![](http://img.youtube.com/vi/xXrVb8E8gMM/0.jpg)](https://www.youtube.com/watch?v=xXrVb8E8gMM&feature=youtu.be "Youtube")
 
-You can also run following test apk.
-https://dl.dropboxusercontent.com/u/186681453/free/admob/CordovaApp-debug.apk
+You can also run following test apk. https://dl.dropboxusercontent.com/u/186681453/pluginsforcordova/admob/apk.html
 
 # Useful links #
 
-Cordova promotion & monetisation plugins<br>
-http://cranberrygame.github.io
+Plugins For Cordova<br>
+http://cranberrygame.github.io?referrer=github
 
 # Credits #
