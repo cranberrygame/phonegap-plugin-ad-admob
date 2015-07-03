@@ -116,8 +116,7 @@ public class Admob extends CordovaPlugin {
 		//http://stackoverflow.com/questions/24539578/cordova-plugin-listening-to-device-orientation-change-is-it-possible
 		//http://developer.android.com/reference/android/view/View.OnLayoutChangeListener.html
 		//https://gitshell.com/lvxudong/A530_packages_app_Camera/blob/master/src/com/android/camera/ActivityBase.java
-    	//webView.addOnLayoutChangeListener(new View.OnLayoutChangeListener(){//cordova5 build error
-		getView(webView).addOnLayoutChangeListener(new View.OnLayoutChangeListener(){
+    	webView.addOnLayoutChangeListener(new View.OnLayoutChangeListener(){
 		    @Override
 	        public void onLayoutChange(View v, int left, int top, int right, int bottom,
 	                int oldLeft, int oldTop, int oldRight, int oldBottom) {
@@ -147,23 +146,6 @@ public class Admob extends CordovaPlugin {
 	        }		    
 		});
     }
-	public static View getView(CordovaWebView webView) {	
-		if(View.class.isAssignableFrom(CordovaWebView.class)) {
-			return (View) webView;
-		}
-		
-		try {
-			Method getViewMethod = CordovaWebView.class.getMethod("getView", (Class<?>[]) null);
-			if(getViewMethod != null) {
-				Object[] args = {};
-				return (View) getViewMethod.invoke(webView, args);
-			}
-		} 
-		catch (Exception e) {
-		}
-		
-		return null;
-	}	
 	private void addEvent_overlap() {
 		//http://stackoverflow.com/questions/11281562/android-admob-resize-on-landscape
 		if (bannerView != null) {							
@@ -483,8 +465,7 @@ public class Admob extends CordovaPlugin {
 			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.MATCH_PARENT, RelativeLayout.LayoutParams.MATCH_PARENT);
 			//webView.addView(bannerViewLayout, params);
 			bannerViewLayout.setLayoutParams(params);
-			//webView.addView(bannerViewLayout);//cordova5 build error
-			((ViewGroup)getView(webView)).addView(bannerViewLayout);
+			webView.addView(bannerViewLayout);
 		}
 		
 		if (bannerView != null) {							
@@ -595,8 +576,7 @@ public class Admob extends CordovaPlugin {
 	}	
 	private void _showBannerAd_split(String position, String size){
 		if (webView != null) {							
-			//ViewGroup parentView = (ViewGroup)webView.getParent();//cordova5 build error
-			ViewGroup parentView = (ViewGroup)getView(webView);
+			ViewGroup parentView = (ViewGroup)webView.getParent();
 			if (parentView != null) {
 				if (position.equals("top-left") || position.equals("top-center")|| position.equals("top-right") || position.equals("left") || position.equals("center") || position.equals("right")) {	
 					parentView.addView(bannerView, 0);

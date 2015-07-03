@@ -28,7 +28,6 @@
 @synthesize size;
 @synthesize lastOrientation;
 
-/*
 - (CDVPlugin *)initWithWebView:(UIWebView *)theWebView {
     self = (Admob *)[super initWithWebView:theWebView];
     if (self) {
@@ -40,11 +39,6 @@
          object:nil];
     }
     return self;
-}
-*/
-- (void) pluginInitialize {
-    [super pluginInitialize];    
-    //
 }
 
 - (void)deviceOrientationChangeAdmob:(NSNotification *)notification{
