@@ -35,6 +35,9 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.view.Surface;
 
+//
+import java.lang.reflect.Method;
+
 class Util {
 
 	//ex) Util.alert(cordova.getActivity(),"message");
